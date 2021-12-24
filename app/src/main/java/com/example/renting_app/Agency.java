@@ -4,18 +4,18 @@ public class Agency {
     String agency_email;
     String agency_name;
     String password;
-    String countyr;
+    String country;
     String city;
     String agency_phone;
 
     public Agency() {
     }
 
-    public Agency(String agency_email, String agency_name, String password, String countyr, String city, String agency_phone) {
+    public Agency(String agency_email, String agency_name, String password, String country, String city, String agency_phone) {
         this.agency_email = agency_email;
         this.agency_name = agency_name;
         this.password = password;
-        this.countyr = countyr;
+        this.country = country;
         this.city = city;
         this.agency_phone = agency_phone;
     }
@@ -44,12 +44,12 @@ public class Agency {
         this.password = password;
     }
 
-    public String getCountyr() {
-        return countyr;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountyr(String countyr) {
-        this.countyr = countyr;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getCity() {
@@ -74,7 +74,7 @@ public class Agency {
                 "agency_email='" + agency_email + '\'' +
                 ", agency_name='" + agency_name + '\'' +
                 ", password='" + password + '\'' +
-                ", countyr='" + countyr + '\'' +
+                ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", agency_phone='" + agency_phone + '\'' +
                 '}';
