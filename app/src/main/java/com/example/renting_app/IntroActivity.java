@@ -20,7 +20,7 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_intro);
         setProgress(false);
         button = (Button) findViewById(R.id.connectB_intro);
         button.setOnClickListener(new View.OnClickListener() {
@@ -28,7 +28,7 @@ public class IntroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ConnectionAsyncTask connectionAsyncTask = new
                         ConnectionAsyncTask(IntroActivity.this);
-                connectionAsyncTask.execute("http://www.mocky.io/v2/5b4e6b4e3200002c009c2a44");
+                connectionAsyncTask.execute("https://run.mocky.io/v3/4d0f58c0-eb99-4154-b1b8-0d018c752003");
             }
         });
         linearLayout = (LinearLayout) findViewById(R.id.layout);
@@ -36,7 +36,7 @@ public class IntroActivity extends AppCompatActivity {
     public void setButtonText(String text) {
         button.setText(text);
     }
-    public void fillStudents(List<Property> properties) {
+    public void fillProperties(List<Property> properties) {
         LinearLayout linearLayout = (LinearLayout)
                 findViewById(R.id.layout);
 

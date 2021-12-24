@@ -31,8 +31,9 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,String> {
         super.onPostExecute(s);
         ((IntroActivity) activity).setProgress(false);
         ((IntroActivity) activity).setButtonText("connected");
-        List<Property> students =
+        List<Property> properties =
                 PropertyJsonParser.getObjectFromJason(s);
-        ((IntroActivity) activity).fillStudents(students);
+      //  assert properties != null;
+        ((IntroActivity) activity).fillProperties(properties);
     }
 }
