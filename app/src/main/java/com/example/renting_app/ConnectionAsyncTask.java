@@ -11,8 +11,19 @@ import java.util.List;
 
 public class ConnectionAsyncTask extends AsyncTask<String,String,String> {
     Activity activity;
+    boolean  isSuccess;
+
     public ConnectionAsyncTask(Activity activity) {
         this.activity = activity;
+        this.isSuccess = false;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
     }
 
     @Override
@@ -35,5 +46,6 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,String> {
                 PropertyJsonParser.getObjectFromJason(s);
       //  assert properties != null;
         ((IntroActivity) activity).fillProperties(properties);
+        this.isSuccess = true; // here we declare that the connection is good!!
     }
 }
