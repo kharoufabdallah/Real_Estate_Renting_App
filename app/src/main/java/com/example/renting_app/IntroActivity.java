@@ -44,7 +44,8 @@ public class IntroActivity extends AppCompatActivity {
                 // if success -> go into sign/in/up page
                 // else stay here until success !
 
-                    if (connectionAsyncTask.isSuccess()) ; // write code here to move into sign/up intent
+                    if (connectionAsyncTask.isSuccess())
+                        ; // write code here to move into sign/up intent
 
                     /// TODO: not working in here -> in main works fine
                     else { // write code of TOAST message that is not successfull

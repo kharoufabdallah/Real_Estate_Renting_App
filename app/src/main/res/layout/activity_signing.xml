@@ -15,21 +15,9 @@
         android:text="        Signing Activity"
         android:textSize="36sp" />
 
-    <fragment
-        android:id="@+id/sign_in_frag"
-        android:name="com.example.renting_app.Sign_in_Frag"
-        android:layout_width="match_parent"
-        android:layout_height="268dp" />
-
-    <fragment
-        android:id="@+id/sign_up_frag"
-        android:name="com.example.renting_app.Sign_up_Frag"
-        android:layout_width="match_parent"
-        android:layout_height="343dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
@@ -46,6 +34,20 @@
             android:layout_weight="1"
             android:text="sign up"
             app:iconTint="#6C0B0B" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/fragment_in_signing"
+            android:name="com.example.renting_app.choose_user_Frag"
+            android:layout_width="259dp"
+            android:layout_height="162dp"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>
