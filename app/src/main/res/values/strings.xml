@@ -1,5 +1,23 @@
 <resources>
     <string name="app_name">renting_app</string>
+
+    <string-array name="list_array">
+        <item>MALE / M</item>
+        <item>Female / F</item>
+    </string-array>
+
+    <string-array name="nat_array">
+        <item>Germany</item>
+        <item>Russia</item>
+        <item>UK</item>
+        <item>Palestine</item>
+        <item>Jordan</item>
+        <item>USA</item>
+        <item>Poland</item>
+        <item>Lebanon</item>
+        <item>France</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
