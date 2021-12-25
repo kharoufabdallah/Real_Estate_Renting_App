@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context=".Tenant_Sign_Up_activity">
 
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        -->
+<!--    </ScrollView>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +37,6 @@
             android:hint="Valid Email Address"
             android:inputType="textEmailAddress" />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,7 +61,6 @@
             android:hint="First Name"
             android:inputType="textPersonName" />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -237,7 +241,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -257,4 +261,58 @@
             android:ems="10"
             android:inputType="phone" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="484dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#E47070"
+            android:backgroundTint="#9DEBF4"
+            android:text="Country of residence" />
+
+        <Spinner
+            android:id="@+id/spinnerNat2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:backgroundTint="#F1B7B7"
+            android:entries="@array/nat_array" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#CA8181"
+            android:backgroundTint="#A2EDF6"
+            android:text="City " />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName4"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/Submit_DataB"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:text="Submit Data" />
+
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.renting_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,7 +16,7 @@ public class choose_user_Frag extends Fragment {
 
 
     Button choose_agency;
-    Button  choose_tenant;
+    Button choose_tenant;
 
 
     public choose_user_Frag() {
@@ -39,12 +40,16 @@ public class choose_user_Frag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        this.choose_agency= (Button) getActivity().findViewById(R.id.AgencyB_frag);
-//        choose_agency.setOnClickListener(v -> {
-//            // move into sign in/up intent
-//        } );
-        return inflater.inflate(R.layout.fragment_choose_user, container, false);
+        View view  = inflater.inflate(R.layout.fragment_choose_user, container, false);
+        Button choose_tenantB = (Button) view.findViewById(R.id.TenantB_frag);
+        choose_tenantB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getActivity(),Tenant_Sign_Up_activity.class);
+                startActivity(intent1);
+            }
+        } );
+        return view;
     }
 }
