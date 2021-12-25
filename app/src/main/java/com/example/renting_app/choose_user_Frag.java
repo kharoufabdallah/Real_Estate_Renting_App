@@ -14,7 +14,8 @@ import android.widget.Button;
 public class choose_user_Frag extends Fragment {
 
 
-    Button choose_agency,choose_tenant;
+    Button choose_agency;
+    Button  choose_tenant;
 
 
     public choose_user_Frag() {
@@ -32,16 +33,18 @@ public class choose_user_Frag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        choose_agency= (Button) choose_agency.findViewById(R.id.TenantB_frag);
-        choose_agency.setOnClickListener(v -> {
-            // move into sign in/up intent
-        });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        this.choose_agency= (Button) getActivity().findViewById(R.id.AgencyB_frag);
+//        choose_agency.setOnClickListener(v -> {
+//            // move into sign in/up intent
+//        } );
         return inflater.inflate(R.layout.fragment_choose_user, container, false);
     }
 }

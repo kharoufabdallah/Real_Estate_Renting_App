@@ -22,44 +22,50 @@ public class IntroActivity extends AppCompatActivity {
     Button connection_button;
     LinearLayout linearLayout;
 
-    Intent intent=new Intent(Intent.ACTION_MAIN, Uri.parse("tel:+1555"));
-
+    int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-        setProgress(false);
+        setProgress(false);    // progressBar functionalities
 
         connection_button = findViewById(R.id.connectB_intro);
-        connection_button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.d("one","Entered else");
+        connection_button.setOnClickListener(v -> {
+//            @Override
+//            public void onClick(View v) {
+            if(this.count == 0) {
+                Log.d("one", "Entered else");
                 ConnectionAsyncTask connectionAsyncTask = new
                         ConnectionAsyncTask(IntroActivity.this);
                 connectionAsyncTask.execute("https://run.mocky.io/v3/4d0f58c0-eb99-4154-b1b8-0d018c752003");
+                this.count = 1;
 
-                // in here, we have to test weather the connection is successfull or not
-                // if success -> go into sign/in/up page
-                // else stay here until success !
-
-                    if (connectionAsyncTask.isSuccess())
-                        ; // write code here to move into sign/up intent
+                if (connectionAsyncTask.isSuccess()) {  // attribute of the connection
+                    Intent intent = new Intent(IntroActivity.this, SigningActivity.class);
+                    startActivity(intent);
+                    finish();
 
                     /// TODO: not working in here -> in main works fine
-                    else { // write code of TOAST message that is not successfull
+                } else {
+                //    this.count = 0;
+                    Log.d("ELSE", "Entered else");
 
-                        Log.d("ELSE","Entered else");
-
-                        Context context = getApplicationContext();
-                     Toast toast =Toast.makeText(context,
-                            "Unsuccessful Connection - Retry",Toast.LENGTH_SHORT);
-                     toast.show();
-                   }
+                    Context context = getApplicationContext();
+                    Toast toast = Toast.makeText(context,
+                            "Unsuccessful Connection - Retry", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
-            });
-        linearLayout = (LinearLayout) findViewById(R.id.layout);
+            }
+            else {
+                this.count = 0;
+                Intent intent = new Intent(IntroActivity.this, SigningActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+        );
+
+            linearLayout = (LinearLayout) findViewById(R.id.layout);
     }
     public void setButtonText(String text) { // used in AsyncTask
         connection_button.setText(text);
@@ -78,7 +84,7 @@ public class IntroActivity extends AppCompatActivity {
     }
     public void setProgress(boolean progress) { // used here and in AsyncTask methods
         ProgressBar progressBar = (ProgressBar)
-                findViewById(R.id.progressBar_intro);
+                findViewById(R.id.progressBar);
         if (progress) {
             progressBar.setVisibility(View.VISIBLE);
         } else {

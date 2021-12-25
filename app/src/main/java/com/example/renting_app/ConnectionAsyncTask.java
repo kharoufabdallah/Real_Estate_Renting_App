@@ -1,5 +1,6 @@
 package com.example.renting_app;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import java.util.List;
 
@@ -47,5 +48,10 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,String> {
       //  assert properties != null;
         ((IntroActivity) activity).fillProperties(properties);
         this.isSuccess = true; // here we declare that the connection is good!!
+
+//        Intent intent=new Intent(com.example.renting_app.IntroActivity.this,SigningActivity.class);
+////             intent.putExtra("Go to 2nd",1); // sending data into signing activity
+//        startActivity(intent);
+//        finish();
     }
 }

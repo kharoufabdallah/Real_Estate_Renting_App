@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -28,6 +29,10 @@ public class SigningActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signing);
+
+//        Intent intent1 = getIntent();
+//        String txt=intent1.getStringExtra("Android");
+
 
         sign_in_b= (Button)findViewById(R.id.sign_inB);
         sign_in_b.setOnClickListener(v -> {
