@@ -2,6 +2,7 @@ package com.example.renting_app;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
@@ -63,5 +64,14 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
         db.insert("TENANT", null, vs); // TENANT IS TABLE COLUMN
         db.close();
+    }
+
+    public Cursor get_emailfrom_data(String needed_to_search_email){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT * FROM TENANT WHERE tenant_email MATCH" + needed_to_search_email +";",null);
+    }
+    public Cursor get_passfrom_data(String needed_to_search_pass){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT * FROM TENANT WHERE tenant_password MATCH" + needed_to_search_pass +";",null);
     }
 }

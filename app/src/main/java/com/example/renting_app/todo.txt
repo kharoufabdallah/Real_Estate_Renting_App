@@ -1,0 +1,3 @@
+1. concat cpp with the number edit text and push into db ( tenant signup ) --> Tenant_sign_up_activity
+2. debug email X db.email in login
+3. singup and login for agencies

@@ -3,6 +3,7 @@ package com.example.renting_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import com.hbb20.CountryCodePicker;
 import java.util.regex.Pattern;
 
 
-/// TODO : setError when two emails are the same in database 
+/// TODO : setError when two emails are the same in database
 
 public class Tenant_Sign_Up_activity extends AppCompatActivity {
 
@@ -53,7 +54,6 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
                     ".{6,}" +               //at least 6 characters
 //                    ".{15}" +
                     "$");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +82,21 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
 
         backB  = findViewById(R.id.back_to_log_inB);
         submit_and_sign_upB = findViewById(R.id.Submit_DataB);
+
+        // main functionality (i.e. validation and insertion) ;
+
         submit_and_sign_upB.setOnClickListener(v -> {
-                Tenant to_be_inserted = setTenantAttrs (); // validation of attrs are done here
-                push_into_db(to_be_inserted);
+//                Tenant to_be_inserted;// = setTenantAttrs (); // validation of attrs are done here
+                push_into_db(setTenantAttrs());
                 Toast.makeText(this, "Welcome to System", Toast.LENGTH_LONG).show();
+        });
+
+        backB.setOnClickListener(v ->
+        {
+            Toast.makeText(this, "Back to Login menu", Toast.LENGTH_LONG).show();
+            Intent intent=new Intent(Tenant_Sign_Up_activity.this,SigningActivity.class);
+            startActivity(intent); // going to intro layout - REST
+            finish();
         });
     }
 

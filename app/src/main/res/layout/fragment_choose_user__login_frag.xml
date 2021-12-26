@@ -16,18 +16,20 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/AgencyB_frag2"
-                android:layout_width="198dp"
+                android:id="@+id/loginB_agency"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#8BC34A"
-                android:text="Login as An agency" />
+                android:layout_weight="1"
+                android:backgroundTint="#DD3131"
+                android:text="Login as an agency" />
 
             <Button
-                android:id="@+id/TenantB_frag2"
-                android:layout_width="match_parent"
+                android:id="@+id/loginB_tenant"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#E61414"
-                android:text="Login as A Tenant" />
+                android:layout_weight="1"
+                android:backgroundTint="#4CAF50"
+                android:text="login as a tenant" />
         </LinearLayout>
 
     </LinearLayout>
