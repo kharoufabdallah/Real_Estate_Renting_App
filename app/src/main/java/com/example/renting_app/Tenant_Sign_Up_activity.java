@@ -2,6 +2,9 @@ package com.example.renting_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -15,7 +18,7 @@ import com.hbb20.CountryCodePicker;
 import java.util.regex.Pattern;
 
 
-/// TODO : PUSH DATA ON DB
+/// TODO : setError when two emails are the same in database 
 
 public class Tenant_Sign_Up_activity extends AppCompatActivity {
 
@@ -48,7 +51,7 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
                     "(?=.*[@#$%^&+=])" +    //at least 1 special character
                     "(?=\\S+$)" +           //no white spaces
                     ".{6,}" +               //at least 6 characters
-                    ".{15}" +
+//                    ".{15}" +
                     "$");
 
     @Override
@@ -80,19 +83,66 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
         backB  = findViewById(R.id.back_to_log_inB);
         submit_and_sign_upB = findViewById(R.id.Submit_DataB);
         submit_and_sign_upB.setOnClickListener(v -> {
-            boolean isEv = validateEmail();
-            boolean isPv = validatePassword();
-            boolean isNv = validateName();
-            if (isEv && isPv && isNv) {
+                Tenant to_be_inserted = setTenantAttrs (); // validation of attrs are done here
+                push_into_db(to_be_inserted);
                 Toast.makeText(this, "Welcome to System", Toast.LENGTH_LONG).show();
-                push_into_db();
-            }
         });
     }
 
-    // this function inserts tenant into SQLite database
-    void push_into_db() {
+    public Tenant setTenantAttrs() {
+        Tenant tnt = new Tenant();
+         if(validateEmail()) tnt.setTenant_email(emailAddressEditText.getText().toString());
+         if(validatePassword()) tnt.setTenant_password( password.getText().toString());
+         if(validateName()) {
+             tnt.setFirst_name(firstName.getText().toString());
+             tnt.setLast_name(lastName.getText().toString());
+         }
+         tnt.setGender(gender_spin.getSelectedItem().toString());
+         tnt.setNationality(nat_spin.getSelectedItem().toString());
 
+        if (phone_edit.getText().toString().isEmpty()) {
+            phone_edit.setError("Cannot be empty");
+          //  setTenantAttrs();
+        } else {
+            tnt.setPhone(phone_edit.getText().toString());
+        }
+        if (fam_size_edit.getText().toString().isEmpty()) {
+            fam_size_edit.setError("Cannot be empty");
+         //   setTenantAttrs();
+        } else {
+            tnt.setFam_size(Integer.parseInt(fam_size_edit.getText().toString()));
+        }
+
+        if (GMS_edit.getText().toString().isEmpty()) {
+            GMS_edit.setError("Cannot be Empty");
+          //  setTenantAttrs();
+        } else {
+            tnt.setGMS(Double.parseDouble(GMS_edit.getText().toString()));
+        }
+
+        tnt.setResidence_country(country_res_spin.getSelectedItem().toString());
+
+        if (city_edit.getText().toString().isEmpty()) {
+            city_edit.setError("Cannot be empty");
+         //   setTenantAttrs();
+        } else {
+            tnt.setCity(city_edit.getText().toString());
+        }
+
+        if (occ_edit.getText().toString().isEmpty()) {
+            occ_edit.setError("Cannot be Empty");
+         //   setTenantAttrs();
+        } else {
+            tnt.setOccupation(occ_edit.getText().toString());
+        }
+
+        return tnt;
+    }
+
+    // this function inserts tenant into SQLite database
+    public  void push_into_db(Tenant tenant) {
+        DataBaseHelper sqLiteDatabase = new DataBaseHelper(Tenant_Sign_Up_activity.this);
+        sqLiteDatabase.insertTenant(tenant);
     }
 
     boolean validateName ()

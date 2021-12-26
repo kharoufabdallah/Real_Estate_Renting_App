@@ -7,12 +7,14 @@ public class Tenant {
     String gender;
     String tenant_password;
     String nationality;
+    String phone;
+
     double GMS;
     String occupation;
     int fam_size;
     String residence_country;
     String city;
-    String phone;
+
 
     public Tenant() {
     }
