@@ -244,14 +244,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/phoneTV"
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/countryCode_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
-            android:backgroundTint="#AEE3EA"
-            android:text="Phone" />
+            />
 
         <EditText
             android:id="@+id/editTextPhoneTenant"
@@ -259,6 +256,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="phone number"
             android:inputType="phone" />
     </LinearLayout>
 
@@ -301,18 +299,25 @@
             android:text="City " />
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
+            android:id="@+id/city_edit"
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="add space between cities"
             android:inputType="textPersonName" />
     </LinearLayout>
 
     <Button
         android:id="@+id/Submit_DataB"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:text="Submit Data" />
+        android:layout_height="wrap_content"
+        android:text="Sign Up and submit Data" />
+
+    <Button
+        android:id="@+id/back_to_log_inB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to login page" />
 
 </LinearLayout>

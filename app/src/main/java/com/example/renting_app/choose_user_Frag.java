@@ -3,20 +3,17 @@ package com.example.renting_app;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
+/// this is for signup form
+
 public class choose_user_Frag extends Fragment {
-
-
-    Button choose_agency;
-    Button choose_tenant;
 
 
     public choose_user_Frag() {
@@ -42,7 +39,7 @@ public class choose_user_Frag extends Fragment {
                              Bundle savedInstanceState) {
 
         View view  = inflater.inflate(R.layout.fragment_choose_user, container, false);
-        Button choose_tenantB = (Button) view.findViewById(R.id.TenantB_frag);
+        Button choose_tenantB = (Button) view.findViewById(R.id.TenantB_frag2);
         choose_tenantB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

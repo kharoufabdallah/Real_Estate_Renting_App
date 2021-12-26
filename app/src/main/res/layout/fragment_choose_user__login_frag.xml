@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/llfc1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".chooseUser_Login_frag">
 
-    tools:context=".choose_user_Frag">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,14 +20,14 @@
                 android:layout_width="198dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#8BC34A"
-                android:text="Sign Up as An agency" />
+                android:text="Login as An agency" />
 
             <Button
                 android:id="@+id/TenantB_frag2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#E61414"
-                android:text="Sign Up as A Tenant" />
+                android:text="Login as A Tenant" />
         </LinearLayout>
 
     </LinearLayout>

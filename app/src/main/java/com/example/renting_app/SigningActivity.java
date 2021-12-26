@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 public class SigningActivity extends AppCompatActivity {
 
     final choose_user_Frag cuf1  = new choose_user_Frag();
+    final chooseUser_Login_frag cuf2 = new chooseUser_Login_frag();
+
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
 
@@ -26,23 +28,21 @@ public class SigningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signing);
 
-   //    getSupportFragmentManager().beginTransaction().add(R.layout.llfc1,new choose_user_Frag()).commit();
-
-        sign_in_b= (Button)findViewById(R.id.sign_inB);
+        sign_in_b= (Button)findViewById(R.id.sign_inB);  // cuf2
         sign_in_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cuf1.isAdded())
+                if(cuf2.isAdded())
                 {
                     return; //or return false/true, based on where you are calling from
                 }
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.Root_IN, cuf1, "choose user frag");
+                fragmentTransaction.add(R.id.Root_IN, cuf2, "choose user frag");
                 fragmentTransaction.commit();
             }
         } );
 
-        sign_up_b= (Button)findViewById(R.id.sign_upB);
+        sign_up_b= (Button)findViewById(R.id.sign_upB); // cuf1
         sign_up_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +51,7 @@ public class SigningActivity extends AppCompatActivity {
                     return; //or return false/true, based on where you are calling from
                 }
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.Root_IN, cuf1, "choose user frag");
+                fragmentTransaction.add(R.id.root2, cuf1, "choose user frag2");
                 fragmentTransaction.commit();
             }
         } );
@@ -59,6 +59,7 @@ public class SigningActivity extends AppCompatActivity {
         cont_guestB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 }
         }); 
     }

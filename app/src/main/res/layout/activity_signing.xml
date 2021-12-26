@@ -70,4 +70,10 @@
         android:backgroundTint="#FF5722"
         android:text="Continue to app as a guest" />
 
+    <LinearLayout
+        android:id="@+id/root2"
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        android:orientation="vertical"></LinearLayout>
+
 </LinearLayout>
