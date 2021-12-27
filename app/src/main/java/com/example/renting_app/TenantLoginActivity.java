@@ -2,6 +2,7 @@ package com.example.renting_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -58,10 +59,14 @@ public class TenantLoginActivity extends AppCompatActivity {
 
             if (email_exists) pass_exists= check_if_password_exist_in_db(passwordEdit.getText().toString(),emailEdit.getText().toString()) ; // related with email also
             // if pass_exist == false ==> returned null from the database --> query search is wrong
-            
-            if (email_exists &pass_exists) {
+
+            /// TODO: edit pass_exist in if statement
+            if (email_exists) {   /////
                 Toast.makeText(TenantLoginActivity.this, "email and password found",
                         Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(TenantLoginActivity.this,UI_Activity.class);
+                startActivity(intent); // going to intro layout - REST
+                finish();
             } else {
                 emailEdit.setError("Email provided not registered");
                 Toast.makeText(TenantLoginActivity.this, "either email or password incorrect ",

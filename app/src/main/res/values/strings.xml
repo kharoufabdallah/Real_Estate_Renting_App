@@ -6,6 +6,11 @@
         <item>Female / F</item>
     </string-array>
 
+    <!--to toggle the open close button
+        of the navigation drawer-->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
     <string-array name="nat_array">
         <item>Germany</item>
         <item>Russia</item>

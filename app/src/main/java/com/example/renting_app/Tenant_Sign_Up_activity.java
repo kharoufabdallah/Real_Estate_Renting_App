@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 public class Tenant_Sign_Up_activity extends AppCompatActivity {
 
+    boolean ee,pe,fe,le,cpe,gme,oce,fse,cie,phe;
     EditText emailAddressEditText;
     EditText firstName;
     EditText lastName;
@@ -87,8 +88,12 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
 
         submit_and_sign_upB.setOnClickListener(v -> {
 //                Tenant to_be_inserted;// = setTenantAttrs (); // validation of attrs are done here
-                push_into_db(setTenantAttrs());
-                Toast.makeText(this, "Welcome to System", Toast.LENGTH_LONG).show();
+                Tenant tenant =setTenantAttrs();
+                if(ee&&pe&&cpe&&fe&&le&&gme&&oce&&fse&&cie&&phe) {
+                    push_into_db(tenant);
+                    Toast.makeText(this, "Welcome to System", Toast.LENGTH_LONG).show();
+                }
+                else Toast.makeText(this, "some fields are empty - refill", Toast.LENGTH_SHORT).show();
         });
 
         backB.setOnClickListener(v ->
@@ -112,38 +117,48 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
          tnt.setNationality(nat_spin.getSelectedItem().toString());
 
         if (phone_edit.getText().toString().isEmpty()) {
+            phe=false;
             phone_edit.setError("Cannot be empty");
           //  setTenantAttrs();
         } else {
+            phe=true;
             tnt.setPhone(phone_edit.getText().toString());
         }
         if (fam_size_edit.getText().toString().isEmpty()) {
+            fse=false;
             fam_size_edit.setError("Cannot be empty");
          //   setTenantAttrs();
         } else {
+            fse=true;
             tnt.setFam_size(Integer.parseInt(fam_size_edit.getText().toString()));
         }
 
         if (GMS_edit.getText().toString().isEmpty()) {
+            gme=false;
             GMS_edit.setError("Cannot be Empty");
           //  setTenantAttrs();
         } else {
+            gme=true;
             tnt.setGMS(Double.parseDouble(GMS_edit.getText().toString()));
         }
 
         tnt.setResidence_country(country_res_spin.getSelectedItem().toString());
 
         if (city_edit.getText().toString().isEmpty()) {
+            cie=false;
             city_edit.setError("Cannot be empty");
          //   setTenantAttrs();
         } else {
+            cie=true;
             tnt.setCity(city_edit.getText().toString());
         }
 
         if (occ_edit.getText().toString().isEmpty()) {
+            oce=false;
             occ_edit.setError("Cannot be Empty");
          //   setTenantAttrs();
         } else {
+            oce=true;
             tnt.setOccupation(occ_edit.getText().toString());
         }
 
@@ -163,24 +178,30 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
 
         if(inputLName.length()<3) //  || inputName.length()<3)
         {
+            le=false;
             lastName.setError("Name is too short");
             return false;
         }
         if(inputName.length()<3) //  || inputName.length()<3)
         {
+            fe=false;
             firstName.setError("Name is too short");
             return false;
         }
         if(inputName.length()>20) //  || inputName.length()<3)
         {
+            fe=false;
             firstName.setError("Name is too long");
             return false;
         }
         if(inputLName.length()>20) //  || inputName.length()<3)
         {
+            le=false;
             lastName.setError("Name is too long");
             return false;
         }
+        le=true;
+        fe=true;
         return true;
     }
 
@@ -191,17 +212,25 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
         if (password.getText().toString().isEmpty() || confirm_password.getText().toString().isEmpty()) {
             password.setError("Password cannot be empty");
             confirm_password.setError("ReWrite password to validate");
+            pe=false;
+            cpe=false;
             return false;
         }
         if (!PASSWORD_PATTERN.matcher(input_pass).matches()) {
             password.setError("Password too weak");
+            pe=false;
+            cpe=false;
             return false;
         }
         if (!password.getText().toString().equals(confirm_password.getText().toString())) {
             confirm_password.setError("Passwords do not match - re-edit");
             password.setError("Passwords do not match - re-edit");
+            pe=false;
+            cpe=false;
             return false;
         } else {
+            pe=true;
+            cpe=true;
             password.setError(null);
             return true;
 
@@ -212,12 +241,15 @@ public class Tenant_Sign_Up_activity extends AppCompatActivity {
         String emailInput = emailAddressEditText.getText().toString();
 
         if (emailInput.isEmpty()) {
+            ee=false;
             emailAddressEditText.setError("Email Address cannot be empty");
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            ee=false;
             emailAddressEditText.setError("Please enter a valid email address");
             return false;
         } else {
+            ee=true;
             emailAddressEditText.setError(null);
             return true;
         }
