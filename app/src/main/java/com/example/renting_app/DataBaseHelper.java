@@ -66,12 +66,21 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.close();
     }
 
-    public Cursor get_emailfrom_data(String needed_to_search_email){
+    public String get_emailfrom_data(String needed_to_search_email){
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT * FROM TENANT WHERE tenant_email MATCH" + needed_to_search_email +";",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM TENANT WHERE tenant_email LIKE '" + "%" +needed_to_search_email+"%" +"'",null);
+        if(cursor.moveToFirst())
+            return cursor.getString(0);
+        return null;
     }
-    public Cursor get_passfrom_data(String needed_to_search_pass){
+    public String get_passfrom_data(String needed_to_search_pass,String found_email){
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT * FROM TENANT WHERE tenant_password MATCH" + needed_to_search_pass +";",null);
+        Cursor curs = db.rawQuery("SELECT * FROM TENANT WHERE tenant_password IN " +
+                "(SELECT tenant_password from TENANT WHERE tenant_email=?) " +
+                "like '" +"%" + needed_to_search_pass+"%" +"'",new String [] {found_email});
+        if(curs.moveToFirst())
+            return curs.getString(0);
+        return null;
+        //return db.rawQuery("SELECT * FROM TENANT WHERE tenant_password MATCH " + needed_to_search_pass +";",null);
     }
 }

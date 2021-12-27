@@ -50,12 +50,23 @@ public class TenantLoginActivity extends AppCompatActivity {
 
         loginB.setOnClickListener(v ->
         {
-            if(emailEdit.getText().toString().isEmpty()) emailEdit.setError("Field cannot be empty");
+            if(emailEdit.getText().toString().isEmpty()) emailEdit.setError("Field cannot be empty"); //when clicking on login button
             if(passwordEdit.getText().toString().isEmpty()) passwordEdit.setError("Field cannot be empty");
 
-//           boolean email_exists =  check_if_email_exist_in_db(emailEdit.getText().toString()) ;
-//           boolean pass_exists =   check_if_password_exist_in_db(passwordEdit.getText().toString()) ;
+            boolean email_exists =  check_if_email_exist_in_db(emailEdit.getText().toString()) ;
+            boolean pass_exists=false; // default - email is not found
 
+            if (email_exists) pass_exists= check_if_password_exist_in_db(passwordEdit.getText().toString(),emailEdit.getText().toString()) ; // related with email also
+            // if pass_exist == false ==> returned null from the database --> query search is wrong
+            
+            if (email_exists &pass_exists) {
+                Toast.makeText(TenantLoginActivity.this, "email and password found",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                emailEdit.setError("Email provided not registered");
+                Toast.makeText(TenantLoginActivity.this, "either email or password incorrect ",
+                        Toast.LENGTH_SHORT).show();
+            }
 
             if(rememberme.isChecked()) {  // write email and password on sp
 
@@ -70,7 +81,7 @@ public class TenantLoginActivity extends AppCompatActivity {
                 loginPrefEditor.clear();
                 loginPrefEditor.commit();
             }
-       //     do_next(email_exists,pass_exists);
+         //   do_next(email_exists,pass_exists);
         });
     }
     void do_next(boolean ee, boolean pe) {
@@ -81,17 +92,24 @@ public class TenantLoginActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
     }
 
-    void login_into_app() {}
+    void login_into_app() {Toast.makeText(TenantLoginActivity.this, "MAIN MENU !",
+            Toast.LENGTH_LONG).show();}
 
-    boolean check_if_password_exist_in_db(String pass)
+    boolean check_if_password_exist_in_db(String pass,String found_email)
     {
         DataBaseHelper db = new DataBaseHelper(TenantLoginActivity.this);
-        if (db.get_passfrom_data(pass).toString().equals(pass)) return true;
-        return false;
+        String pass_returned = db.get_passfrom_data(pass,found_email);
+        if(pass_returned==null) return false;
+        return true;
+       // if (db.get_passfrom_data(pass,found_email).equals(pass)) return true;
+       // return false;
     }
      boolean check_if_email_exist_in_db(String email) {
          DataBaseHelper db = new DataBaseHelper(TenantLoginActivity.this);
-         if (db.get_emailfrom_data(email).toString().equals(email)) return true;
-         return false;
+         String email_returned = db.get_emailfrom_data(email);
+         if (email_returned==null) return false;
+         return true;
+         //if (db.get_emailfrom_data(email).equals(email)) return true; // without toString(); by default returns a STRING
+         //return false;
     }
 }
