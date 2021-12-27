@@ -81,6 +81,15 @@ public class IntroActivity extends AppCompatActivity {
             textView.setText(properties.get(i).toString()); // writes the read data
             linearLayout.addView(textView);
         }
+        call_dataB_to_add_properties(properties); // this method adds all online-REST-properties into database table Property
+
+    }
+
+    public void call_dataB_to_add_properties(List<Property>props)
+    {
+        DataBaseHelper db = new DataBaseHelper(IntroActivity.this);
+        db.insert_property_from_json_file(props);
+        Toast.makeText(this, "Inserted in property DB", Toast.LENGTH_SHORT).show();
     }
     public void setProgress(boolean progress) { // used here and in AsyncTask methods
         ProgressBar progressBar = (ProgressBar)

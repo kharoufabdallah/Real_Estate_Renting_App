@@ -40,10 +40,19 @@ public class choose_user_Frag extends Fragment {
 
         View view  = inflater.inflate(R.layout.fragment_choose_user, container, false);
         Button choose_tenantB = (Button) view.findViewById(R.id.TenantB_frag2);
+        Button choose_AgencyB = (Button) view.findViewById(R.id.AgencyB_frag2);
         choose_tenantB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent  intent1 = new Intent(getActivity(),Tenant_Sign_Up_activity.class);
+                startActivity(intent1);
+            }
+        } );
+
+        choose_AgencyB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getActivity(),Agency_sign_up_Activity.class);
                 startActivity(intent1);
             }
         } );

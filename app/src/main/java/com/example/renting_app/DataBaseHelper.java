@@ -3,10 +3,14 @@ package com.example.renting_app;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
@@ -20,6 +24,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     public DataBaseHelper(Context ctx){
         super(ctx,DB_NAME,null,DB_VERSION);
     }
+  //  public DataBaseHelper(){super(this,DB_NAME,null,DB_VERSION);}
     public DataBaseHelper(Context context, @Nullable String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -46,6 +51,21 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return super.getDatabaseName();
     }
 
+    public void insertAgency(Agency agency) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues vs = new ContentValues();
+
+        vs.put("agency_email",agency.getAgency_email());
+        vs.put("agency_name",agency.getAgency_name());
+        vs.put("gender","NA");
+        vs.put("agency_password",agency.getPassword());
+        vs.put("country",agency.getCountry());
+        vs.put("city",agency.getCity());
+        vs.put("agency_phone",agency.getAgency_phone());
+        db.insert("AGENCY", null, vs); // TENANT IS TABLE COLUMN
+        db.close();
+    }
+
     public void insertTenant (Tenant tenant) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues vs = new ContentValues();
@@ -66,6 +86,23 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.close();
     }
 
+    public void insert_property_from_json_file(List<Property> props)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues vs= new ContentValues();
+        for (int i=0;i<props.size();i++) {
+            vs.put("city",props.get(i).getCity());
+            vs.put("postal_address",props.get(i).getPostal_address());
+            vs.put("surface_area",props.get(i).getSurface_area());
+            vs.put("const_year", (props.get(i).getConst_year()));
+            vs.put("bedroom_no",props.get(i).getBedroom_no());
+            vs.put("rental_price",props.get(i).getRental_price());
+            vs.put("status",props.get(i).getStatus());
+            db.insert("PROPERTY", null, vs); // TENANT IS TABLE COLUMN
+            db.close();
+        }
+    }
+
     public String get_emailfrom_data(String needed_to_search_email){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM TENANT WHERE tenant_email LIKE '" + "%" +needed_to_search_email+"%" +"'",null);
@@ -82,5 +119,11 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             return curs.getString(0);
         return null;
         //return db.rawQuery("SELECT * FROM TENANT WHERE tenant_password MATCH " + needed_to_search_pass +";",null);
+    }
+
+    public DataBaseHelper open(SQLiteDatabase db) throws SQLException
+    {
+        db = getWritableDatabase();
+        return this;
     }
 }

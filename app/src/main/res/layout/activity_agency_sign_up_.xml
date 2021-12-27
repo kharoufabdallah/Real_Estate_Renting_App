@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Agency_sign_up_Activity">
+
+    <EditText
+        android:id="@+id/agency_email_edit_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="EMAIL OF AGENCY"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/agency_name_edit_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Agency Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/agency_pass_edit_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/agency_pass_edit_signup_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword" />
+
+    <Spinner
+        android:id="@+id/spinner_signup_country_agency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/nat_array" />
+
+    <EditText
+        android:id="@+id/city_agency_edit_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="add at least 2 cities"
+        android:inputType="textMultiLine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/countryCode_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <EditText
+            android:id="@+id/phone_agency_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Phone"
+            android:inputType="phone" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sing_up_agency_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:text="Sign up as agency" />
+
+    <Button
+        android:id="@+id/back_lgoin_agency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to Login page" />
+
+</LinearLayout>

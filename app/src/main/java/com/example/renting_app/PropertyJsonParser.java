@@ -1,4 +1,6 @@
 package com.example.renting_app;
+import android.database.sqlite.SQLiteOpenHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,7 +11,7 @@ import java.util.List;
 //this class will convert the Json
 //object we got from the REST API to Array List of the type Student
 
-public class PropertyJsonParser {
+public class PropertyJsonParser  {
     public static List<Property> getObjectFromJason(String jason) {
         List<Property> properties;
         try {
@@ -27,6 +29,7 @@ public class PropertyJsonParser {
                 property.setStatus(jsonObject.getString("status"));
                 property.setSurface_area(jsonObject.getDouble("surface_area"));
                 properties.add(property);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
