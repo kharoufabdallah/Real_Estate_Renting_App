@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Home" />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Search a Property" />
     <item
         android:id="@+id/nav_account"
         android:title="My Account"
@@ -11,10 +16,13 @@
         />
 
     <item
+        android:id="@+id/nav_history"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="Renting History" />
+    <item
         android:id="@+id/nav_settings"
-        android:title="Settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        />
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Settings" />
 
     <item
         android:id="@+id/nav_logout"
