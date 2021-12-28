@@ -110,9 +110,26 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             return cursor.getString(0);
         return null;
     }
+    public String get_Agency_emailfrom_data(String needed_to_search_email){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM AGENCY WHERE agency_email LIKE '" + "%" +needed_to_search_email+"%" +"'",null);
+        if(cursor.moveToFirst())
+            return cursor.getString(0);
+        return null;
+    }
     public String get_passfrom_data(String needed_to_search_pass,String found_email){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor curs = db.rawQuery("SELECT * FROM TENANT WHERE tenant_password IN " +
+        Cursor curs = db.rawQuery("SELECT * FROM AGENCY WHERE agency_password IN " +
+                "(SELECT agency_password from AGENCY WHERE agency_email=?) " +
+                "like '" +"%" + needed_to_search_pass+"%" +"'",new String [] {found_email});
+        if(curs.moveToFirst())
+            return curs.getString(0);
+        return null;
+        //return db.rawQuery("SELECT * FROM TENANT WHERE tenant_password MATCH " + needed_to_search_pass +";",null);
+    }
+    public String get_Agency_passfrom_data(String needed_to_search_pass,String found_email){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("SELECT * FROM AGENCY WHERE tenant_password IN " +
                 "(SELECT tenant_password from TENANT WHERE tenant_email=?) " +
                 "like '" +"%" + needed_to_search_pass+"%" +"'",new String [] {found_email});
         if(curs.moveToFirst())

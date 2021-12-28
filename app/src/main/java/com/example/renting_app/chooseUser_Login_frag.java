@@ -49,7 +49,14 @@ public class chooseUser_Login_frag extends Fragment {
 
         // still logIn as Agency button in here
 
-
+        Button choose_AgencyB = (Button) view.findViewById(R.id.loginB_agency);
+        choose_AgencyB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(),Agency_login_activity.class);
+                startActivity(intent1);
+            }
+        } );
 
         return view;
     }

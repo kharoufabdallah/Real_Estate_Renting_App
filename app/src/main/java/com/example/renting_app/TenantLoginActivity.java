@@ -103,7 +103,7 @@ public class TenantLoginActivity extends AppCompatActivity {
     boolean check_if_password_exist_in_db(String pass,String found_email)
     {
         DataBaseHelper db = new DataBaseHelper(TenantLoginActivity.this);
-        String pass_returned = db.get_passfrom_data(pass,found_email);
+        String pass_returned = db.get_Agency_passfrom_data(pass,found_email);
         if(pass_returned==null) return false;
         return true;
        // if (db.get_passfrom_data(pass,found_email).equals(pass)) return true;
