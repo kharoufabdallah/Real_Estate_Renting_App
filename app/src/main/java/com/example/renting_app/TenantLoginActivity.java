@@ -65,6 +65,7 @@ public class TenantLoginActivity extends AppCompatActivity {
                 Toast.makeText(TenantLoginActivity.this, "email and password found",
                         Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(TenantLoginActivity.this,UI_Activity.class);
+                intent.putExtra("tenant_email",emailEdit.getText().toString());
                 startActivity(intent); // going to intro layout - REST
                 finish();
             } else {

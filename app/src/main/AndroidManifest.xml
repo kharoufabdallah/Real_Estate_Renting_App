@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Renting_app">
-<!--        android:theme="@style/Theme.Renting_app"-->
-        <activity android:name=".Agency_login_activity"></activity>
+        <activity android:name=".TenantProfile"></activity>
+        <!-- android:theme="@style/Theme.Renting_app" -->
+        <activity android:name=".Agency_login_activity" />
         <activity android:name=".Agency_sign_up_Activity" />
         <activity android:name=".UI_Activity" />
         <activity android:name=".TenantLoginActivity" />

@@ -143,4 +143,32 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db = getWritableDatabase();
         return this;
     }
+
+    public String getNameFromEmail(String email)
+    {
+        String name = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select first_name from TENANT WHERE tenant_email LIKE '"+"%"+email+"%"+"'",null);
+        if (curs.moveToFirst())name  = curs.getString(0);
+        return name;
+    }
+    public String getLastName_emailKey(String email){
+        String last = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select last_name from TENANT WHERE tenant_email LIKE '"+"%"+email+"%"+"'",null);
+        if (curs.moveToFirst())last  = curs.getString(0);
+        return last;
+    }
+    public String getNat_emailKey(String email){
+        String nat = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select nationality from TENANT WHERE tenant_email LIKE '"+"%"+email+"%"+"'",null);
+        if (curs.moveToFirst())nat  = curs.getString(0);
+        return nat;
+    }
+    public void update_nat_in_profile(String email,String new_nat)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update TENANT set nationality = '" + new_nat  + "'" +"where tenant_email LIKE '"+"%"+email+"%"+"'");
+    }
 }

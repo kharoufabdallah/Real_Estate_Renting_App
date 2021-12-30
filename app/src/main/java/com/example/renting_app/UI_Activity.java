@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -25,9 +26,13 @@ import com.google.android.material.navigation.NavigationView;
 
 public class UI_Activity extends AppCompatActivity {
 
+    TextView tv1;
+    String name_of_tenant;
+    String email_of_tenant;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView nav_view;
+    DataBaseHelper db; // databased helper to get data and out in in UI
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
     final RentalHistoryPopUpFragment cuf2 = new RentalHistoryPopUpFragment();
@@ -36,6 +41,17 @@ public class UI_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ui);
+
+        // to get name from email and print hi , ......
+        email_of_tenant = getIntent().getStringExtra("tenant_email");
+
+        db = new DataBaseHelper(UI_Activity.this);
+        tv1 = (TextView)findViewById(R.id.tvUI_tenant);
+        name_of_tenant =db.getNameFromEmail(email_of_tenant);
+        tv1.setText("Hi, "  + name_of_tenant + "!");
+        // now --> email of tenant is know in the UI -- > we can access the name and other information
+        // from the database depending on email_of_tenant.
+
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
@@ -62,6 +78,7 @@ public class UI_Activity extends AppCompatActivity {
                         break;
                         //return true;
                     case R.id.nav_account:
+                        call_profile_show_activity(); // not dialog to enable passing data from/to UI and child activities!
 //                        return true;
                         break;
                     case R.id.nav_history:
@@ -123,6 +140,13 @@ public class UI_Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    void call_profile_show_activity() {
+        Intent intent=new Intent(UI_Activity.this,TenantProfile.class);
+        intent.putExtra("tenant_name",name_of_tenant);
+        intent.putExtra("tenant_email",email_of_tenant);
+        startActivity(intent); // going to intro layout - REST
+        finish();
+    }
     void call_rental_history_popup(){
 //        DialogFragment dialogFragment= new DialogFragment();
 //        dialogFragment.show(getSupportFragmentManager(),"RentalHistoryPopupFragment");
