@@ -4,12 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -23,6 +29,8 @@ public class UI_Activity extends AppCompatActivity {
     public ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView nav_view;
 
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+    final RentalHistoryPopUpFragment cuf2 = new RentalHistoryPopUpFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,7 @@ public class UI_Activity extends AppCompatActivity {
         // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         nav_view=  (NavigationView)findViewById(R.id.nnnnn);
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -56,6 +65,7 @@ public class UI_Activity extends AppCompatActivity {
 //                        return true;
                         break;
                     case R.id.nav_history:
+                        call_rental_history_popup();
                      //   return true;
                         break;
                     case R.id.nav_logout:
@@ -111,5 +121,28 @@ public class UI_Activity extends AppCompatActivity {
             }
        }
         return super.onOptionsItemSelected(item);
+    }
+
+    void call_rental_history_popup(){
+//        DialogFragment dialogFragment= new DialogFragment();
+//        dialogFragment.show(getSupportFragmentManager(),"RentalHistoryPopupFragment");
+
+
+        //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.add(R.id.my_drawer_layout, cuf2, "choose user frag");
+//        fragmentTransaction.commit();
+
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+
+        final Dialog dialog = new Dialog(UI_Activity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.getWindow().setLayout((6 * width)/7, DrawerLayout.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.fragment_rental_history_pop_up);
+        dialog.show();
     }
 }
