@@ -12,6 +12,19 @@ public class Property {
     double rental_price;
     String status;
 
+    Integer image_view;
+
+    public Property(String city, String postal_address, double surface_area, int const_year, int bedroom_no, double rental_price, String status, Integer image_view) {
+        this.city = city;
+        this.postal_address = postal_address;
+        this.surface_area = surface_area;
+        this.const_year = const_year;
+        this.bedroom_no = bedroom_no;
+        this.rental_price = rental_price;
+        this.status = status;
+        this.image_view = image_view;
+    }
+
     public Property() {
     }
 
@@ -23,6 +36,14 @@ public class Property {
         this.bedroom_no = bedroom_no;
         this.rental_price = rental_price;
         this.status = status;
+    }
+
+    public Integer getImage_view() {
+        return image_view;
+    }
+
+    public void setImage_view(Integer image_view) {
+        this.image_view = image_view;
     }
 
     public String getCity() {

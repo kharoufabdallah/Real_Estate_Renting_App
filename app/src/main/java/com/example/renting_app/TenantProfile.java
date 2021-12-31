@@ -27,6 +27,7 @@ public class TenantProfile extends AppCompatActivity {
     Uri imageURI;
     //for alertDialog
 
+    Button change_pp;
     EditText natEdit;
     EditText emailEdit;
     AlertDialog alrtdialog; // does not change in database ---> primary key
@@ -53,7 +54,7 @@ public class TenantProfile extends AppCompatActivity {
             NatTv     = (TextView) findViewById(R.id.nat_tvProfile);
             avatar    = (ImageView) findViewById(R.id.avatar);
             back_main_menu =(Button)findViewById(R.id.back_main_menub);
-
+            change_pp = (Button)findViewById(R.id.changepp_B);
 
         alrtdialog  = new AlertDialog.Builder(this).create();
         alrtdialog2  = new AlertDialog.Builder(this).create();
@@ -121,7 +122,7 @@ public class TenantProfile extends AppCompatActivity {
                 finish();
             });
 
-            avatar.setOnClickListener(v ->
+            change_pp.setOnClickListener(v ->
             {
                 openGallery();
             });

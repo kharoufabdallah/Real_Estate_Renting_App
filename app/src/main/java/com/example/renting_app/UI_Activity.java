@@ -7,6 +7,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -42,13 +44,23 @@ public class UI_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ui);
 
+        RecyclerView rv  = (RecyclerView)findViewById(R.id.rec_view_home);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+        Property[] stat_prop_test = new Property[] {
+                new Property("NY","42342342",120.5,2019,3,1250.5,"Much better",R.drawable.flag_albania)
+                ,new Property("CALIFORNIA","4555",1223.5,2020,7,2280.5,"Fantastic",R.drawable.flag_united_states_of_america)
+                        };
+        // Adapter of the recycler view :
+        PropertyAdpter propertyAdpter = new PropertyAdpter(stat_prop_test,UI_Activity.this);
+        rv.setAdapter(propertyAdpter);
         // to get name from email and print hi , ......
         email_of_tenant = getIntent().getStringExtra("tenant_email");
 
         db = new DataBaseHelper(UI_Activity.this);
-        tv1 = (TextView)findViewById(R.id.tvUI_tenant);
         name_of_tenant =db.getNameFromEmail(email_of_tenant);
-        tv1.setText("Hi, "  + name_of_tenant + "!");
+    //    tv1.setText("Hi, "  + name_of_tenant + "!");
         // now --> email of tenant is know in the UI -- > we can access the name and other information
         // from the database depending on email_of_tenant.
 
