@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home" />
-    <item
-        android:id="@+id/nav_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="Search a Property" />
-    <item
-        android:id="@+id/nav_account"
-        android:title="My Account"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        />
+    <group android:id="@+id/gr1">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="Renting History" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="Search a Property"></item>
+    </group>
 
-    <item
-        android:id="@+id/nav_history"
-        android:icon="@android:drawable/ic_menu_mapmode"
-        android:title="Renting History" />
-    <item
-        android:id="@+id/nav_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Settings" />
+    <group android:id="@+id/gr2">
+        <item
+            android:id="@+id/nav_add_prop"
+            android:icon="@drawable/ic_baseline_plus_one_24"
+            android:title="Add a property - for agencies" />
+        <item
+            android:id="@+id/nav_edit_prop"
+            android:icon="?android:attr/actionModeFindDrawable"
+            android:title="Edit Properties - for agencies" />
+        <item
+            android:id="@+id/nav_history_agency"
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:title="Rental History of Agency" />
+    </group>
 
-    <item
-        android:id="@+id/nav_logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_baseline_login_24"
-        />
+    <group android:id="@+id/gr3">
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:title="My Account" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_baseline_login_24"
+            android:title="Logout" />
+    </group>
 </menu>
