@@ -43,7 +43,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        //db.execSQL("Drop table if exists "+"PROPERTY");
     }
 
     @Override
@@ -170,5 +170,61 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("update TENANT set nationality = '" + new_nat  + "'" +"where tenant_email LIKE '"+"%"+email+"%"+"'");
+    }
+
+    public void insertPropMan(Property property){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues vs = new ContentValues();
+
+        vs.put("city",property.getCity());
+        vs.put("postal_address",property.getPostal_address());
+        vs.put("surface_area",property.getSurface_area());
+        vs.put("const_year",property.getConst_year());
+        vs.put("bedroom_no",property.getBedroom_no());
+        vs.put("rental_price",property.getRental_price());
+        vs.put("status",property.getStatus());
+
+        db.insert("PROPERTY",null,vs);
+        db.close();
+    }
+
+    public ArrayList<Property> store_recs_in_al () {
+      //  String [] columns = new String[] {"city","postal_address","surface_area","const_year","bedroom_no","rental_price","status"};
+
+        ArrayList<Property> prop_list = new ArrayList<Property>();
+      //  Property temp ;
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from PROPERTY",null);
+       // return Cursor;
+        while(cursor.moveToNext())
+        {
+            prop_list.add(new Property(cursor.getString(0),cursor.getString(1),cursor.getDouble(2),
+                    cursor.getInt(3),cursor.getInt(4),cursor.getDouble(5),cursor.getString(6),R.drawable.flag_cameroon));
+        }
+//        int i=0;
+//        int icity = cursor.getColumnIndex("city");
+//        int ipost = cursor.getColumnIndex("postal_address");
+//        int isurface = cursor.getColumnIndex("surface_area");
+//        int iyear = cursor.getColumnIndex("const_year");
+//        int ibed = cursor.getColumnIndex("bedroom_no");
+//        int irental= cursor.getColumnIndex("rental_price");
+//        int istat = cursor.getColumnIndex("status");
+
+//        for (cursor.moveToFirst();!cursor.moveToLast();cursor.moveToNext())
+//        {
+//            temp = new Property();
+////            temp.setCity(cursor.getString(icity));
+////            temp.setPostal_address(cursor.getString(ipost));
+////            temp.setSurface_area(cursor.getDouble(isurface));
+////            temp.setConst_year(cursor.getInt(iyear));
+////            temp.setBedroom_no(cursor.getInt(ibed));
+////            temp.setRental_price(cursor.getDouble(irental));
+////            temp.setStatus(cursor.getString(istat));
+//            prop_list.add(temp);
+//         //   i++;
+//           // Toast.makeText(DataBaseHelper.this,prop_list.get(0).getStatus(),Toast.LENGTH_SHORT).show();
+//        }
+        return prop_list;
     }
 }

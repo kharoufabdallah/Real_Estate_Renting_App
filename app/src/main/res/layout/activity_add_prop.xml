@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addAll_addPropB"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#292A30"
+    android:backgroundTint="#00FFFFFF"
+    android:orientation="vertical"
+    tools:context=".AddPropActivity">
+
+    <EditText
+        android:id="@+id/addProp_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="City of Property"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/addProp_postal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Postal Address"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/addProp_surface"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Surface Area"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/addProp_const"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Construction Year"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/addProp_noBed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Number of Bedrooms"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/addProp_rentalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Rental Price"
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/addProp_Status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Status"
+        android:inputType="textMultiLine" />
+
+    <ImageView
+        android:id="@+id/addPRop_img"
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+
+    <Button
+        android:id="@+id/UploadPhotoB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00EC0202"
+        android:text="Add Image of Property"
+        android:textColor="#FF0000" />
+
+    <Button
+        android:id="@+id/addallProp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:text="Add Property "
+        android:textColor="#FF0000" />
+
+    <Button
+        android:id="@+id/back_mainBAdd_Prop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:text="back to main menu"
+        android:textColor="#FF0000" />
+
+</LinearLayout>

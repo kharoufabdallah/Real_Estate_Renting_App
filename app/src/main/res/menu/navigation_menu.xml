@@ -11,6 +11,10 @@
             android:icon="@android:drawable/ic_menu_myplaces"
             android:title="Renting History" />
         <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:title="Tenant Account" />
+        <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_search_black_24dp"
             android:title="Search a Property"></item>
@@ -29,13 +33,13 @@
             android:id="@+id/nav_history_agency"
             android:icon="@android:drawable/ic_menu_mapmode"
             android:title="Rental History of Agency" />
+        <item
+            android:id="@+id/nav_agency_acc"
+            android:icon="@android:drawable/ic_menu_view"
+            android:title="Agency Account" />
     </group>
 
     <group android:id="@+id/gr3">
-        <item
-            android:id="@+id/nav_account"
-            android:icon="@drawable/ic_baseline_account_circle_24"
-            android:title="My Account" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@android:drawable/ic_menu_preferences"

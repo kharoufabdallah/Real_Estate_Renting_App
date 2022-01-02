@@ -11,12 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PropertyAdpter extends RecyclerView.Adapter<PropertyAdpter.ViewHolder> {
+import java.util.ArrayList;
 
-    Property[] registered_props;
+    public class PropertyAdpter extends RecyclerView.Adapter<PropertyAdpter.ViewHolder> {
+
+    ArrayList<Property> registered_props;
     Context context;
 
-    public PropertyAdpter(Property[] registered_props,UI_Activity activity){
+    public PropertyAdpter(ArrayList<Property> registered_props,UI_Activity activity){
         this.registered_props = registered_props;
         this.context = activity;
     }
@@ -32,7 +34,7 @@ public class PropertyAdpter extends RecyclerView.Adapter<PropertyAdpter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final Property prop_list = registered_props[position];
+        final Property prop_list = registered_props.get(position);
         holder.pro_name_tv.setText(prop_list.getCity()); // no name of property - replaced by city
         holder.pro_date_tv.setText(Integer.toString(prop_list.getConst_year())); // as a date
         holder.imgview.setImageResource(prop_list.getImage_view());
@@ -55,7 +57,7 @@ public class PropertyAdpter extends RecyclerView.Adapter<PropertyAdpter.ViewHold
 
     @Override
     public int getItemCount() {
-        return registered_props.length;
+        return registered_props.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

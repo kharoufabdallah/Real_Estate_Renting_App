@@ -1,3 +1,10 @@
-1. concat cpp with the number edit text and push into db ( tenant signup ) --> Tenant_sign_up_activity
-3. debug email X db.email in login
-4. singup and login for agencies
+1. add propery by agency on db and view
+2. add db props on view
+
+
+
+complete storing sqlite into arraylist of props in database helepr
+                after saving them return the arraylist and add it into the adapter in UIactivity
+account of agency is buggy  - solve it
+
+
