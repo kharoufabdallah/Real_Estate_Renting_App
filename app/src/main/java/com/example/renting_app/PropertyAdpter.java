@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,15 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-    public class PropertyAdpter extends RecyclerView.Adapter<PropertyAdpter.ViewHolder> {
+    public class PropertyAdpter extends RecyclerView.Adapter<PropertyAdpter.ViewHolder> implements Filterable {
 
     ArrayList<Property> registered_props;
+    ArrayList<Property> props_list_filer;
+
     Context context;
 
     public PropertyAdpter(ArrayList<Property> registered_props,UI_Activity activity){
         this.registered_props = registered_props;
         this.context = activity;
+        this.props_list_filer= new ArrayList<Property>(registered_props);
     }
     @NonNull
     @Override
@@ -60,7 +66,45 @@ import java.util.ArrayList;
         return registered_props.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+        @Override
+        public Filter getFilter() {
+            return filter;
+        }
+
+        Filter filter = new Filter() {
+
+        //runs in background
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+              ArrayList<Property> filtered_list = new ArrayList<>();
+
+              if (constraint.toString().isEmpty()) {
+                  filtered_list.addAll(props_list_filer);
+              }
+                  else {
+
+                          for (Property prop: props_list_filer)
+                          {
+                              if(prop.getCity().toLowerCase().contains(constraint.toString().toLowerCase()))
+                                  filtered_list.add(prop);
+                          }
+
+              }
+                  FilterResults fr = new FilterResults();
+                  fr.values= filtered_list;
+
+                return fr;
+            }
+
+            //runs in UI thread
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                registered_props.clear();
+                registered_props.addAll((Collection<? extends Property>) results.values);
+                notifyDataSetChanged();
+            }
+        };
+        public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgview;
         TextView pro_name_tv;
         TextView pro_date_tv;

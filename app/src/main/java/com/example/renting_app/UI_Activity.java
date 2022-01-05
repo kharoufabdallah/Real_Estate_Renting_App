@@ -3,6 +3,7 @@ package com.example.renting_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
@@ -37,6 +38,7 @@ public class UI_Activity extends AppCompatActivity {
     String email_of_tenant;
     String email_of_agency;
 
+    PropertyAdpter propertyAdpter;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView nav_view;
@@ -64,7 +66,7 @@ public class UI_Activity extends AppCompatActivity {
 //        po.add( new Property("NY", "42342342", 120.5, 2019, 3, 1250.5, "Much better", R.drawable.flag_albania));
 //        po.add( new Property("CALIFORNIA", "4555", 1223.5, 2020, 7, 2280.5, "Fantastic", R.drawable.flag_united_states_of_america));
 
-        PropertyAdpter propertyAdpter = new PropertyAdpter(po, UI_Activity.this);
+        propertyAdpter = new PropertyAdpter(po, UI_Activity.this);
         rv.setAdapter(propertyAdpter);
 
 
@@ -138,6 +140,21 @@ public class UI_Activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation_menu, menu);
+        MenuItem item = menu.findItem(R.id.nav_search);
+
+        SearchView searchView= (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                propertyAdpter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 

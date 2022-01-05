@@ -195,7 +195,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
       //  Property temp ;
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("select * from PROPERTY",null);
+        Cursor cursor = db.rawQuery("select * from PROPERTY GROUP BY surface_area having count(*) >= 1",null);
        // return Cursor;
         while(cursor.moveToNext())
         {

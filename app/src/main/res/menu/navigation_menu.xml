@@ -16,8 +16,10 @@
             android:title="Tenant Account" />
         <item
             android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search_black_24dp"
-            android:title="Search a Property"></item>
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="Search a Property"
+            app:showAsAction="always|collapseActionView"
+            app:actionViewClass="androidx.appcompat.widget.SearchView"></item>
     </group>
 
     <group android:id="@+id/gr2">
