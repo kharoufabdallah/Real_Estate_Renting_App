@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +27,19 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 
 /// TODO : THIS IS TENANT UI.
 
 public class UI_Activity extends AppCompatActivity {
+
+    Button minsurf;
+    Button maxsurf;
+    Button minbed;
+    Button maxbed;
+    Button minprice;
 
     TextView tv1;
     String name_of_tenant;
@@ -56,6 +65,14 @@ public class UI_Activity extends AppCompatActivity {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
+
+        minsurf = (Button)findViewById(R.id.min_surfaceB);
+        maxsurf = (Button)findViewById(R.id.max_surfB);
+        minbed = (Button)findViewById(R.id.min_bedB);
+        maxbed = (Button)findViewById(R.id.max_bedB);
+        minprice = (Button)findViewById(R.id.min_rentalB);
+
+
         ArrayList<Property> stat_prop_test = new ArrayList<Property>();
         stat_prop_test.add( new Property("NY", "42342342", 120.5, 2019, 3, 1250.5, "Much better", R.drawable.flag_albania));
         stat_prop_test.add( new Property("CALIFORNIA", "4555", 1223.5, 2020, 7, 2280.5, "Fantastic", R.drawable.flag_united_states_of_america));
@@ -63,12 +80,37 @@ public class UI_Activity extends AppCompatActivity {
 
         // Adapter of the recycler view
         ArrayList<Property> po = getAllprops();
-//        po.add( new Property("NY", "42342342", 120.5, 2019, 3, 1250.5, "Much better", R.drawable.flag_albania));
-//        po.add( new Property("CALIFORNIA", "4555", 1223.5, 2020, 7, 2280.5, "Fantastic", R.drawable.flag_united_states_of_america));
+        po.add( new Property("NY", "42342342", 120.5, 2019, 3, 1250.5, "Much better", R.drawable.flag_albania));
+        po.add( new Property("CALIFORNIA", "4555", 1223.5, 2020, 7, 2280.5, "Fantastic", R.drawable.flag_united_states_of_america));
 
         propertyAdpter = new PropertyAdpter(po, UI_Activity.this);
         rv.setAdapter(propertyAdpter);
 
+        minbed.setOnClickListener(v -> {
+            Collections.sort(po,Property.sortBedroom);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            rv.setAdapter(propertyAdpter);
+        });
+        maxbed.setOnClickListener(v -> {
+            Collections.sort(po,Property.sortBedroom);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            rv.setAdapter(propertyAdpter);
+        });
+        minprice.setOnClickListener(v -> {
+            Collections.sort(po,Property.sortprice);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            rv.setAdapter(propertyAdpter);
+        });
+        minsurf.setOnClickListener(v -> {
+            Collections.sort(po,Property.sortsurface);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            rv.setAdapter(propertyAdpter);
+        });
+        maxsurf.setOnClickListener(v -> {
+            Collections.sort(po,Property.sortBedroom);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            rv.setAdapter(propertyAdpter);
+        });
 
         // to get name from email and print hi , ......
         email_of_tenant = getIntent().getStringExtra("tenant_email");

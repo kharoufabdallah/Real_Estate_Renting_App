@@ -3,7 +3,11 @@ package com.example.renting_app;
 
 /// This class is the main data to be parsed from JSON type into data in arrayList
 
-public class Property {
+import java.util.ArrayList;
+import java.util.Comparator;
+
+public class Property implements Comparable<Property>{
+
     String city;
     String postal_address;
     double surface_area;
@@ -102,6 +106,7 @@ public class Property {
         this.status = status;
     }
 
+
     @Override
     public String toString() {
         return "Property{" +
@@ -113,5 +118,38 @@ public class Property {
                 ", rental_price=" + rental_price +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public static Comparator<Property> sortBedroom = new Comparator<Property>()
+    {
+
+        @Override
+        public int compare(Property o1, Property o2) {
+//            return o1.getCity().compareTo(o2.getCity());
+            return o1.getBedroom_no() - o2.getBedroom_no();
+        }
+    };
+
+    public static Comparator<Property> sortprice = new Comparator<Property>()
+    {
+
+        @Override
+        public int compare(Property o1, Property o2) {
+            return (int) o1.getRental_price() - (int) o2.getRental_price() ;
+        }
+    };
+
+    public static Comparator<Property> sortsurface = new Comparator<Property>()
+    {
+
+        @Override
+        public int compare(Property o1, Property o2) {
+            return (int) o1.getSurface_area() - (int) o2.getSurface_area() ;
+        }
+    };
+    @Override
+    public int compareTo(Property o) {
+      return this.bedroom_no = getBedroom_no();
+        //  return Integer.parseInt(Double.toString(this.surface_area))=Integer.parseInt(Double.toString(o.getSurface_area()));
     }
 }
