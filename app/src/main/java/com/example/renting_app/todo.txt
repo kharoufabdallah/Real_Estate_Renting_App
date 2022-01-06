@@ -7,5 +7,5 @@
 
 
 // todo:
-1. search
-2. continue max. sort of surface and bedrooms (UI activity);
+1. application
+2. add advertiser to the peroperty in application --> create new table of the database

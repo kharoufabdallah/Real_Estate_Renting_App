@@ -32,18 +32,23 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) { // CREATION OF MAIN TABLES IN DATABASE SYSTEM
         db.execSQL("CREATE TABLE PROPERTY(city TEXT, postal_address TEXT ,surface_area DOUBLE,const_year INT ,bedroom_no INT," +
-                       "rental_price DOUBLE , status TEXT)");
+                "rental_price DOUBLE , status TEXT)");
 
-        db.execSQL("CREATE TABLE TENANT(tenant_email TEXT PRIMARY KEY, first_name TEXT, last_name TEXT ,  gender TEXT, tenant_password TEXT, nationality TEXT , GMS DOUBLE, " +
+        db.execSQL("CREATE TABLE TENANT( tenant_email TEXT PRIMARY KEY, first_name TEXT, last_name TEXT ,  gender TEXT, tenant_password TEXT, nationality TEXT , GMS DOUBLE, " +
                 " occupation TEXT , fam_size INT, residence_country TEXT, city TEXT ,phone TEXT)");
 
-        db.execSQL("CREATE TABLE AGENCY(agency_email TEXT PRIMARY KEY, agency_name TEXT, gender TEXT, agency_password TEXT, country TEXT , city TEXT, "+
+        db.execSQL("CREATE TABLE AGENCY(/*agency_id INTEGER PRIMARY KEY AUTOINCREMENT,*/ agency_email TEXT PRIMARY KEY, agency_name TEXT, gender TEXT, agency_password TEXT, country TEXT , city TEXT, " +
                 "agency_phone TEXT)");
-    }
 
+    }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL("Drop table if exists "+"PROPERTY");
+        if (newVersion > oldVersion) {
+            db.execSQL("ALTER TABLE PROPERTY ADD COLUMN prop_id INTEGER  PRIMARY KEY AUTOINCREMENT");
+            db.execSQL("ALTER TABLE AGENCY ADD COLUMN agency_id INTEGER  PRIMARY KEY AUTOINCREMENT");
+            db.execSQL("ALTER TABLE TENANT ADD COLUMN tenant_id INTEGER  PRIMARY KEY AUTOINCREMENT");
+            db.execSQL(" CREATE TABLE PROP_AGENCY (prop_id integer, agency_id integer, agency_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(agency_id) REFERENCES AGENCY(agency_id))");
+        }
     }
 
     @Override

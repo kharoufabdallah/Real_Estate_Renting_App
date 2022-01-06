@@ -72,14 +72,9 @@ public class UI_Activity extends AppCompatActivity {
         maxbed = (Button)findViewById(R.id.max_bedB);
         minprice = (Button)findViewById(R.id.min_rentalB);
 
-
-        ArrayList<Property> stat_prop_test = new ArrayList<Property>();
-        stat_prop_test.add( new Property("NY", "42342342", 120.5, 2019, 3, 1250.5, "Much better", R.drawable.flag_albania));
-        stat_prop_test.add( new Property("CALIFORNIA", "4555", 1223.5, 2020, 7, 2280.5, "Fantastic", R.drawable.flag_united_states_of_america));
-
-
         // Adapter of the recycler view
-        ArrayList<Property> po = getAllprops();
+        ArrayList<Property> po = getAllprops(); // getting all properties from database
+
         po.add( new Property("NY", "42342342", 120.5, 2019, 3, 1250.5, "Much better", R.drawable.flag_albania));
         po.add( new Property("CALIFORNIA", "4555", 1223.5, 2020, 7, 2280.5, "Fantastic", R.drawable.flag_united_states_of_america));
 
@@ -92,7 +87,7 @@ public class UI_Activity extends AppCompatActivity {
             rv.setAdapter(propertyAdpter);
         });
         maxbed.setOnClickListener(v -> {
-            Collections.sort(po,Property.sortBedroom);
+            Collections.sort(po,Property.sortBedroom.reversed());
             propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
             rv.setAdapter(propertyAdpter);
         });
@@ -107,7 +102,7 @@ public class UI_Activity extends AppCompatActivity {
             rv.setAdapter(propertyAdpter);
         });
         maxsurf.setOnClickListener(v -> {
-            Collections.sort(po,Property.sortBedroom);
+            Collections.sort(po,Property.sortsurface.reversed());
             propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
             rv.setAdapter(propertyAdpter);
         });

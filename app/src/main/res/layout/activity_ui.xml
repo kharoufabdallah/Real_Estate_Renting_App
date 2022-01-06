@@ -38,21 +38,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="min. surface" />
+                android:backgroundTint="#2FFFFFFF"
+                android:text="min. surface"
+                android:textColor="#9C27B0" />
 
             <Button
                 android:id="@+id/min_rentalB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="min. price" />
+                android:backgroundTint="#2FFFFFFF"
+                android:text="min. price"
+                android:textColor="#9C27B0" />
 
             <Button
                 android:id="@+id/min_bedB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="min. bedroom no" />
+                android:backgroundTint="#2FFFFFFF"
+                android:text="min. bedroom no"
+                android:textColor="#9C27B0" />
 
         </LinearLayout>
 
@@ -66,14 +72,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="max. surface" />
+                android:backgroundTint="#2FFFFFFF"
+                android:text="max. surface"
+                android:textColor="#9C27B0" />
 
             <Button
                 android:id="@+id/max_bedB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="max. bedroom no" />
+                android:backgroundTint="#2FFFFFFF"
+                android:text="max. bedroom no"
+                android:textColor="#9C27B0" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -37,7 +37,7 @@ public class IntroActivity extends AppCompatActivity {
                 Log.d("one", "Entered else");
                 ConnectionAsyncTask connectionAsyncTask = new
                         ConnectionAsyncTask(IntroActivity.this);
-                connectionAsyncTask.execute("https://run.mocky.io/v3/4d0f58c0-eb99-4154-b1b8-0d018c752003");
+                connectionAsyncTask.execute("https://run.mocky.io/v3/7ac68d35-8f29-40e2-9650-156edd793488");
                 this.count = 1;
 
                 if (connectionAsyncTask.isSuccess()) {  // attribute of the connection

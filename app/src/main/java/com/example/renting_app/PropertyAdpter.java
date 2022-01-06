@@ -1,6 +1,7 @@
     package com.example.renting_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ import java.util.Collection;
                 Toast.makeText(context, "Application is going to be opened ", Toast.LENGTH_SHORT).show();
                 // list of prop added for instance statically just to test ya man
                //here is the actual work of each prop in hte list -- when click on the card item
-                application_form_of_property();
+                application_form_of_property(prop_list,holder);
             }
         });
     }
@@ -86,6 +87,8 @@ import java.util.Collection;
                           for (Property prop: props_list_filer)
                           {
                               if(prop.getCity().toLowerCase().contains(constraint.toString().toLowerCase()))
+                                  filtered_list.add(prop);
+                              if(prop.getStatus().toLowerCase().contains(constraint.toString().toLowerCase()))
                                   filtered_list.add(prop);
                           }
 
@@ -126,8 +129,19 @@ import java.util.Collection;
         }
     }
 
-    public void  application_form_of_property()
+    public void  application_form_of_property (Property property,ViewHolder holder)
     {
+        Intent intent = new Intent(context,ApplicationForm.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("prop_img",holder.imgview.toString());
+        intent.putExtra("prop_city",property.getCity());
+        intent.putExtra("prop_date",Integer.toString(property.getConst_year()));
+        intent.putExtra("prop_surface",Double.toString(property.getSurface_area()));
+        intent.putExtra("prop_bed",Integer.toString(property.getBedroom_no()));
+        intent.putExtra("prop_status",property.getStatus());
+        intent.putExtra("prop_price",Double.toString(property.getRental_price()));
+        intent.putExtra("prop_postal",property.getPostal_address());
 
+        context.startActivity(intent);
     }
 }
