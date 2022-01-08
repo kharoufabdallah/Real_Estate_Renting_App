@@ -258,6 +258,15 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.close();
     }
 
+
+    public String getPhoneAgency(String name, String email)
+    { String nat = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select agency_phone from AGENCY WHERE agency_email LIKE '"+"%"+email+"%"+"' and agency_name LIKE '"+"%"+name+"%"+"'",null);
+        if (curs.moveToFirst())nat  = curs.getString(0);
+        return nat;
+    }
+
     public ArrayList<Property> store_recs_in_al () {
       //  String [] columns = new String[] {"city","postal_address","surface_area","const_year","bedroom_no","rental_price","status"};
 

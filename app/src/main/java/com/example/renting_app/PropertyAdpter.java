@@ -68,7 +68,7 @@ import java.util.Collection;
                     //here is the actual work of each prop in hte list -- when click on the card item
                     if (tenant_agency.equals("0"))
                          application_form_of_property(prop_list, holder);
-                    else edit_list_by_agency();
+                    else edit_list_by_agency(prop_list, holder);
                 }
             });
         }
@@ -155,7 +155,18 @@ import java.util.Collection;
         intent.putExtra("agency_or_tenant","0");
         context.startActivity(intent);
     }
-    void edit_list_by_agency(){
-
+    void edit_list_by_agency(Property property,ViewHolder holder){
+        Intent intent = new Intent(context,EditPropertyActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("prop_img",holder.imgview.toString());
+        intent.putExtra("prop_city",property.getCity());
+        intent.putExtra("prop_date",Integer.toString(property.getConst_year()));
+        intent.putExtra("prop_surface",Double.toString(property.getSurface_area()));
+        intent.putExtra("prop_bed",Integer.toString(property.getBedroom_no()));
+        intent.putExtra("prop_status",property.getStatus());
+        intent.putExtra("prop_price",Double.toString(property.getRental_price()));
+        intent.putExtra("prop_postal",property.getPostal_address());
+        intent.putExtra("agency_or_tenant","0");
+        context.startActivity(intent);
     }
 }

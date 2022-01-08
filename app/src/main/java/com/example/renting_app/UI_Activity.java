@@ -75,7 +75,7 @@ public class UI_Activity extends AppCompatActivity {
         }
         else { // 1 -> agency
             db = new DataBaseHelper(UI_Activity.this);
-            name_of_tenant = db.getNameFromEmail_agency(email_of_tenant);
+            name_of_agency = db.getNameFromEmail_agency(email_of_tenant);
         }
 
 
@@ -248,6 +248,11 @@ public class UI_Activity extends AppCompatActivity {
 
     void call_agency_profile()
     {
+        Intent intent = new Intent(UI_Activity.this, AgencyProfile.class);
+        intent.putExtra("agency_name", name_of_agency);
+        intent.putExtra("agency_email_to_prof", email_of_tenant);
+        startActivity(intent);
+        finish();
 //        Intent intent = new Intent(UI_Activity.this, TenantProfile.class);
 //        intent.putExtra("agency_name", name_of_tenant);
 //        intent.putExtra("agency_email", email_of_tenant);

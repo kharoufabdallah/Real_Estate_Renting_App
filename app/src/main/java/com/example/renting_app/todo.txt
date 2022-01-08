@@ -4,6 +4,8 @@
 5. line 141 in addProperty activity --> get image Uri and assign it to the property
 6. hi, null --> tenant profile bug - solve
 
+
+// bug: when click on card and get back to UI --> tenant_email should be sent form the application form
 // todo:
 1. application
 2. history of agency
