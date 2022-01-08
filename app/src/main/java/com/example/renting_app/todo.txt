@@ -3,7 +3,7 @@
 2. agency profile fix
 3. redundancy in records in home page is solved
 4.pictures of properties in home page
-
+5. line 141 in addProperty activity --> get image Uri and assign it to the property
 
 
 // todo:

@@ -19,7 +19,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     private static final String DB_NAME = "SYS";
 
     // below int is our database version
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 3;
 
     public DataBaseHelper(Context ctx){
         super(ctx,DB_NAME,null,DB_VERSION);
@@ -31,6 +31,8 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) { // CREATION OF MAIN TABLES IN DATABASE SYSTEM
+        onUpgrade(db,1,DB_VERSION);
+
         db.execSQL("CREATE TABLE PROPERTY(city TEXT, postal_address TEXT ,surface_area DOUBLE,const_year INT ,bedroom_no INT," +
                 "rental_price DOUBLE , status TEXT)");
 
@@ -39,15 +41,16 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE AGENCY(/*agency_id INTEGER PRIMARY KEY AUTOINCREMENT,*/ agency_email TEXT PRIMARY KEY, agency_name TEXT, gender TEXT, agency_password TEXT, country TEXT , city TEXT, " +
                 "agency_phone TEXT)");
-
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            db.execSQL("ALTER TABLE PROPERTY ADD COLUMN prop_id INTEGER  PRIMARY KEY AUTOINCREMENT");
-            db.execSQL("ALTER TABLE AGENCY ADD COLUMN agency_id INTEGER  PRIMARY KEY AUTOINCREMENT");
-            db.execSQL("ALTER TABLE TENANT ADD COLUMN tenant_id INTEGER  PRIMARY KEY AUTOINCREMENT");
-            db.execSQL(" CREATE TABLE PROP_AGENCY (prop_id integer, agency_id integer, agency_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(agency_id) REFERENCES AGENCY(agency_id))");
+//            db.execSQL("ALTER TABLE PROPERTY ADD COLUMN prop_id INTEGER PRIMARY KEY AUTOINCREMENT");
+//            db.execSQL("ALTER TABLE AGENCY ADD COLUMN agency_id INTEGER  PRIMARY KEY AUTOINCREMENT");
+//            db.execSQL("ALTER TABLE TENANT ADD COLUMN tenant_id INTEGER  PRIMARY KEY AUTOINCREMENT");
+
+//            db.execSQL(" CREATE TABLE PROP_AGENCY (prop_id integer, agency_id integer, agency_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(agency_id) REFERENCES AGENCY(agency_id))");
+//            db.execSQL(" CREATE TABLE PROP_TENANT (prop_id integer, TENANT_id integer, TENANT_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(tenant_id) REFERENCES TENANT(tenant_id))");
         }
     }
 
@@ -205,7 +208,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         while(cursor.moveToNext())
         {
             prop_list.add(new Property(cursor.getString(0),cursor.getString(1),cursor.getDouble(2),
-                    cursor.getInt(3),cursor.getInt(4),cursor.getDouble(5),cursor.getString(6),R.drawable.flag_cameroon));
+                    cursor.getInt(3),cursor.getInt(4),cursor.getDouble(5),cursor.getString(6),R.drawable.flag_canada));
         }
 //        int i=0;
 //        int icity = cursor.getColumnIndex("city");

@@ -43,24 +43,61 @@ public class AddPropActivity extends AppCompatActivity {
         constyear=findViewById(R.id.addProp_const);
         rentalp=findViewById(R.id.addProp_rentalPrice);
         status=findViewById(R.id.addProp_Status);
-        imgview=findViewById(R.id.addPRop_img);
+
         back=findViewById(R.id.back_mainBAdd_Prop);
         add_photo=findViewById(R.id.UploadPhotoB);
         all=findViewById(R.id.addallProp);
 
 
+        imgview=findViewById(R.id.addPRop_img);
+
+        imgview.setOnClickListener(v ->
+        {
+            openGallery();
+        });
+
         all.setOnClickListener(v ->
         {
-            mainProp = setAttrs();
-            push_into_db(mainProp);
-            Toast.makeText(AddPropActivity.this,"Property Added to System",Toast.LENGTH_SHORT).show();
-
+            if(surface.getText().toString().isEmpty()){
+                surface.setError("Cannot be empty"); return;
+            }
+            if(rentalp.getText().toString().isEmpty()){
+                rentalp.setError("Cannot be empty");
+                return;
+            }
+            if(nobed.getText().toString().isEmpty()){
+                nobed.setError("cannot be empty");
+                return;
+            }
+            if(constyear.getText().toString().isEmpty())
+            {
+                constyear.setError("cannot be empty");
+                return;
+            }
+            if(city.getText().toString().isEmpty()){
+                city.setError("Cannot be empty");
+                return;
+            }
+            if(postal.getText().toString().isEmpty())
+            {
+                postal.setError("Cannot be empty");
+                return;
+            }
+            if (status.getText().toString().isEmpty()){
+                status.setError("cannot be empty");
+                return;
+            }
+            else {
+                mainProp = setAttrs();
+                push_into_db(mainProp);
+                Toast.makeText(AddPropActivity.this, "Property Added to System", Toast.LENGTH_SHORT).show();
+            }
         });
 
         back.setOnClickListener(v->
         {
             Intent intent=new Intent(AddPropActivity.this,UI_Activity.class);
-    //        intent.putExtra("tenant_email",email_of_tenant); // this may be tenant email or agency email
+    //      intent.putExtra("tenant_email",email_of_tenant); // this may be tenant email or agency email
             startActivity(intent); // going to intro layout - REST
             finish();
 
@@ -89,7 +126,6 @@ public class AddPropActivity extends AppCompatActivity {
             imageURI = data.getData();
             imgview.setImageURI(imageURI);
         }
-
     }
 
     Property setAttrs(){
@@ -102,7 +138,7 @@ public class AddPropActivity extends AppCompatActivity {
         propp.setPostal_address(postal.getText().toString());
         propp.setBedroom_no(Integer.parseInt(nobed.getText().toString()));
         propp.setConst_year(Integer.parseInt(constyear.getText().toString()));
-     //   propp.setImage_view(imgview.setImageResource(););
+      //  propp.setImage_view(Integer.parseInt(imgview.geImageU));
 
         return propp;
     }
