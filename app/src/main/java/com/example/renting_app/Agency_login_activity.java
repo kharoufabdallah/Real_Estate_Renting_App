@@ -65,6 +65,8 @@ public class Agency_login_activity extends AppCompatActivity {
                 Toast.makeText(Agency_login_activity.this, "email and password found",
                         Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(Agency_login_activity.this,UI_Activity.class);
+                intent.putExtra("tenant_email",email.getText().toString());
+                intent.putExtra("agency_or_tenant","1");
                 startActivity(intent); // going to intro layout - REST
                 finish();
             } else {

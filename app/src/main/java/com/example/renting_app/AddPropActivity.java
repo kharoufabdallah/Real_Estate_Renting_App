@@ -31,10 +31,14 @@ public class AddPropActivity extends AppCompatActivity {
     Uri imageURI;
 
 
+    String email_of_agency="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_prop);
+
+        email_of_agency = getIntent().getStringExtra("tenant_email").toString();
 
         city = findViewById(R.id.addProp_city);
         postal=findViewById(R.id.addProp_postal);
@@ -98,6 +102,8 @@ public class AddPropActivity extends AppCompatActivity {
         {
             Intent intent=new Intent(AddPropActivity.this,UI_Activity.class);
     //      intent.putExtra("tenant_email",email_of_tenant); // this may be tenant email or agency email
+            intent.putExtra("agency_or_tenant","1");
+            intent.putExtra("tenant_email",email_of_agency);
             startActivity(intent); // going to intro layout - REST
             finish();
 
@@ -108,10 +114,18 @@ public class AddPropActivity extends AppCompatActivity {
         });
     }
 
-    public void push_into_db(Property property)
+    // TODO: get name of the agency that added the property --> sendeXtra.
+    public void push_into_db(Property property) // we are guaranteeed that the user is agency now
     {
-        DataBaseHelper sqLiteDatabase = new DataBaseHelper(AddPropActivity.this);
-        sqLiteDatabase.insertPropMan(property);
+        DataBaseHelper db = new DataBaseHelper(AddPropActivity.this);
+        db.insertPropMan(property);
+
+       // DataBaseHelper db = new DataBaseHelper(AddPropActivity.this);
+        int agency_id = db.getID_fromEmail_agency(email_of_agency);
+        int prop_id   = db.getID_of_prop(property);
+        RelAgencyProp relAgencyProp= new RelAgencyProp(agency_id,prop_id,property.getCity(),email_of_agency);
+
+        db.insert_rel_agency_prop(relAgencyProp);
     }
     public void openGallery() {
         Intent gellery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);

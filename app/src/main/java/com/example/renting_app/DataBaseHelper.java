@@ -19,44 +19,56 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     private static final String DB_NAME = "SYS";
 
     // below int is our database version
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 7;
 
     public DataBaseHelper(Context ctx){
         super(ctx,DB_NAME,null,DB_VERSION);
     }
-  //  public DataBaseHelper(){super(this,DB_NAME,null,DB_VERSION);}
+
     public DataBaseHelper(Context context, @Nullable String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) { // CREATION OF MAIN TABLES IN DATABASE SYSTEM
-        onUpgrade(db,1,DB_VERSION);
-
-        db.execSQL("CREATE TABLE PROPERTY(city TEXT, postal_address TEXT ,surface_area DOUBLE,const_year INT ,bedroom_no INT," +
+        onUpgrade(db,0,DB_VERSION);
+        //6
+        db.execSQL("CREATE TABLE PROPERTY(property_id integer primary key autoincrement,city TEXT, postal_address TEXT ,surface_area DOUBLE,const_year INT ,bedroom_no INT," +
                 "rental_price DOUBLE , status TEXT)");
 
-        db.execSQL("CREATE TABLE TENANT( tenant_email TEXT PRIMARY KEY, first_name TEXT, last_name TEXT ,  gender TEXT, tenant_password TEXT, nationality TEXT , GMS DOUBLE, " +
+        db.execSQL("CREATE TABLE TENANT(tenant_id integer primary key autoincrement, tenant_email TEXT , first_name TEXT, last_name TEXT ,  gender TEXT, tenant_password TEXT, nationality TEXT , GMS DOUBLE, " +
                 " occupation TEXT , fam_size INT, residence_country TEXT, city TEXT ,phone TEXT)");
 
-        db.execSQL("CREATE TABLE AGENCY(/*agency_id INTEGER PRIMARY KEY AUTOINCREMENT,*/ agency_email TEXT PRIMARY KEY, agency_name TEXT, gender TEXT, agency_password TEXT, country TEXT , city TEXT, " +
+        db.execSQL("CREATE TABLE AGENCY(agency_id INTEGER PRIMARY KEY AUTOINCREMENT, agency_email TEXT, agency_name TEXT, gender TEXT, agency_password TEXT, country TEXT , city TEXT, " +
                 "agency_phone TEXT)");
+
+        // 7
+        db.execSQL(" CREATE TABLE PROP_AGENCY (prop_id integer, agency_id integer, agency_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(agency_id) REFERENCES AGENCY(agency_id))");
+        db.execSQL(" CREATE TABLE PROP_TENANT (prop_id integer, TENANT_id integer, TENANT_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(tenant_id) REFERENCES TENANT(tenant_id))");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion) {
-//            db.execSQL("ALTER TABLE PROPERTY ADD COLUMN prop_id INTEGER PRIMARY KEY AUTOINCREMENT");
-//            db.execSQL("ALTER TABLE AGENCY ADD COLUMN agency_id INTEGER  PRIMARY KEY AUTOINCREMENT");
-//            db.execSQL("ALTER TABLE TENANT ADD COLUMN tenant_id INTEGER  PRIMARY KEY AUTOINCREMENT");
+        if (oldVersion < newVersion) // new user{
+        {
 
-//            db.execSQL(" CREATE TABLE PROP_AGENCY (prop_id integer, agency_id integer, agency_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(agency_id) REFERENCES AGENCY(agency_id))");
-//            db.execSQL(" CREATE TABLE PROP_TENANT (prop_id integer, TENANT_id integer, TENANT_name TEXT, property_city,FOREIGN KEY(prop_id) REFERENCES PROPERTY(prop_id),FOREIGN KEY(tenant_id) REFERENCES TENANT(tenant_id))");
         }
     }
 
     @Override
     public String getDatabaseName() {
         return super.getDatabaseName();
+    }
+
+    public void insert_rel_agency_prop(RelAgencyProp relAgencyProp)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues vs = new ContentValues();
+        vs.put("prop_id",relAgencyProp.getProp_id());
+        vs.put("agency_id",relAgencyProp.getAgency_id());
+        vs.put("agency_name",relAgencyProp.getAgency_name());
+        vs.put("property_city",relAgencyProp.getProp_city());
+        db.insert("PROP_AGENCY",null,vs);
+        db.close();
     }
 
     public void insertAgency(Agency agency) {
@@ -94,6 +106,26 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.close();
     }
 
+    public void insert_into_prop_agency(List<Property> props) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues vs = new ContentValues();
+//        Cursor cursor;
+//        int ids[];
+//        for (int i = 0; i < props.size(); i++) {
+//
+//            ids[i]=
+//
+//        }
+
+        for (int i = 0; i < props.size(); i++) {
+          //  vs.put("prop_id",props.get(i).);
+            vs.put("agency_id",999);
+            vs.put("agency_name","serverAgent");
+            vs.put("property_city",props.get(i).getCity());
+            db.insert("PROP_AGENCY", null, vs); // TENANT IS TABLE COLUMN
+            db.close();
+        }
+    }
     public void insert_property_from_json_file(List<Property> props)
     {
         SQLiteDatabase db = getWritableDatabase();
@@ -152,6 +184,36 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return this;
     }
 
+    public String getNameFromEmail_agency(String email)
+    {
+        String name = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select agency_name from AGENCY WHERE agency_email LIKE '"+"%"+email+"%"+"'",null);
+        if (curs.moveToFirst())name  = curs.getString(0);
+        return name;
+    }
+
+    public int getID_fromEmail_agency(String email){
+        int id=0;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select agency_id from AGENCY where agency_email like '"+"%"+email+"%"+"'",null);
+        if (curs.moveToFirst())id  = curs.getInt(0);
+        return id;
+    }
+    public int getID_of_prop (Property property)
+    {
+        int id = 0;
+       // try {
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor curs = db.rawQuery("Select property_id from PROPERTY where city like '" +  property.getCity() + "' and surface_area='" +  property.getSurface_area() + "'", null);
+            if (curs.moveToFirst()) id = curs.getInt(0);
+         //   return  id;
+    //    }
+    //    catch (SQLException e) {
+
+      ///  }
+        return id;
+    }
     public String getNameFromEmail(String email)
     {
         String name = null;
@@ -207,8 +269,8 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
        // return Cursor;
         while(cursor.moveToNext())
         {
-            prop_list.add(new Property(cursor.getString(0),cursor.getString(1),cursor.getDouble(2),
-                    cursor.getInt(3),cursor.getInt(4),cursor.getDouble(5),cursor.getString(6),R.drawable.flag_canada));
+            prop_list.add(new Property(cursor.getString(1),cursor.getString(2),cursor.getDouble(3),
+                    cursor.getInt(4),cursor.getInt(5),cursor.getDouble(6),cursor.getString(7),R.drawable.flag_canada));
         }
 //        int i=0;
 //        int icity = cursor.getColumnIndex("city");

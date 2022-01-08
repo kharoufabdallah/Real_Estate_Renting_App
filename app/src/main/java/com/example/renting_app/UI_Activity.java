@@ -31,9 +31,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 
-/// TODO : THIS IS TENANT UI.
+/// TODO : email_tenant from login
 
 public class UI_Activity extends AppCompatActivity {
+
+    String tenant_agency="";
 
     Button minsurf;
     Button maxsurf;
@@ -61,6 +63,23 @@ public class UI_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ui);
 
+
+        /// either 1 for agency or 0 for tenant
+        tenant_agency = getIntent().getStringExtra("agency_or_tenant");
+        email_of_tenant = getIntent().getStringExtra("tenant_email");// email of both
+
+
+        if(getIntent().getStringExtra("agency_or_tenant").equals("0")) { //tenant
+            db = new DataBaseHelper(UI_Activity.this);
+            name_of_tenant = db.getNameFromEmail(email_of_tenant);
+        }
+        else { // 1 -> agency
+            db = new DataBaseHelper(UI_Activity.this);
+            name_of_tenant = db.getNameFromEmail_agency(email_of_tenant);
+        }
+
+
+
         RecyclerView rv = (RecyclerView) findViewById(R.id.rec_view_home);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -78,46 +97,36 @@ public class UI_Activity extends AppCompatActivity {
         po.add( new Property("NY", "42342342", 120.5, 2019, 3, 1250.5, "Much better", R.drawable.flag_albania));
         po.add( new Property("CALIFORNIA", "4555", 1223.5, 2020, 7, 2280.5, "Fantastic", R.drawable.flag_united_states_of_america));
 
-        propertyAdpter = new PropertyAdpter(po, UI_Activity.this);
+        propertyAdpter = new PropertyAdpter(po, UI_Activity.this,tenant_agency);
         rv.setAdapter(propertyAdpter);
 
         minbed.setOnClickListener(v -> {
             Collections.sort(po,Property.sortBedroom);
-            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this,tenant_agency);
             rv.setAdapter(propertyAdpter);
         });
         maxbed.setOnClickListener(v -> {
             Collections.sort(po,Property.sortBedroom.reversed());
-            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this,tenant_agency);
             rv.setAdapter(propertyAdpter);
         });
         minprice.setOnClickListener(v -> {
             Collections.sort(po,Property.sortprice);
-            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this,tenant_agency);
             rv.setAdapter(propertyAdpter);
         });
         minsurf.setOnClickListener(v -> {
             Collections.sort(po,Property.sortsurface);
-            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this,tenant_agency);
             rv.setAdapter(propertyAdpter);
         });
         maxsurf.setOnClickListener(v -> {
             Collections.sort(po,Property.sortsurface.reversed());
-            propertyAdpter = new PropertyAdpter(po,UI_Activity.this);
+            propertyAdpter = new PropertyAdpter(po,UI_Activity.this,tenant_agency);
             rv.setAdapter(propertyAdpter);
         });
 
         // to get name from email and print hi , ......
-        email_of_tenant = getIntent().getStringExtra("tenant_email");
-
-        db = new DataBaseHelper(UI_Activity.this);
-        name_of_tenant = db.getNameFromEmail(email_of_tenant);
-
-       // name_of_agency = db.getNameFromEmail_Agency(email_of_tenant);
-        //    tv1.setText("Hi, "  + name_of_tenant + "!");
-        // now --> email of tenant is know in the UI -- > we can access the name and other information
-        // from the database depending on email_of_tenant.
-
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
@@ -137,16 +146,20 @@ public class UI_Activity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        Toast.makeText(UI_Activity.this, "HOEME ME", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UI_Activity.this, "You are in home page", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_search:
                         break;
                     //return true;
                     case R.id.nav_agency_acc:
-                    //    call_agency_profile();
+                        if(getIntent().getStringExtra("agency_or_tenant").equals("1"))
+                            call_agency_profile();
+                        else Toast.makeText(UI_Activity.this, "Entered as tenant", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_account:
-                        call_profile_show_activity(); // not dialog to enable passing data from/to UI and child activities!
+                        if(getIntent().getStringExtra("agency_or_tenant").equals("0"))
+                            call_profile_show_activity(); // not dialog to enable passing data from/to UI and child activities!
+                        else Toast.makeText(UI_Activity.this, "Entered as agency", Toast.LENGTH_SHORT).show();
 //                        return true;
                         break;
                     case R.id.nav_history:
@@ -155,13 +168,16 @@ public class UI_Activity extends AppCompatActivity {
                         break;
                     case R.id.nav_logout:
                         Intent intent = new Intent(UI_Activity.this, SigningActivity.class);
+                        intent.putExtra("tenant_agency","0");
                         startActivity(intent); // going to intro layout - REST
                         finish();
                         break;
                     case R.id.nav_settings:
                         break;
                     case R.id.nav_add_prop:
-                        add_property_by_agency();
+                        if(tenant_agency.equals("1"))
+                             add_property_by_agency();
+                        else Toast.makeText(UI_Activity.this, "cannot perform action", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_edit_prop:
                         break;
@@ -226,17 +242,17 @@ public class UI_Activity extends AppCompatActivity {
         Intent intent = new Intent(UI_Activity.this, TenantProfile.class);
         intent.putExtra("tenant_name", name_of_tenant);
         intent.putExtra("tenant_email", email_of_tenant);
-        startActivity(intent); // going to intro layout - REST
+        startActivity(intent);
         finish();
     }
 
     void call_agency_profile()
     {
-        Intent intent = new Intent(UI_Activity.this, TenantProfile.class);
-        intent.putExtra("agency_name", name_of_tenant);
-        intent.putExtra("agency_email", email_of_tenant);
-        startActivity(intent); // going to intro layout - REST
-        finish();
+//        Intent intent = new Intent(UI_Activity.this, TenantProfile.class);
+//        intent.putExtra("agency_name", name_of_tenant);
+//        intent.putExtra("agency_email", email_of_tenant);
+//        startActivity(intent); // going to intro layout - REST
+//        finish();
     }
 
     void call_rental_history_popup() {
@@ -264,7 +280,7 @@ public class UI_Activity extends AppCompatActivity {
 
     void add_property_by_agency() {
         Intent intent = new Intent(UI_Activity.this, AddPropActivity.class);
-        intent.putExtra("tenant_email", email_of_tenant); // this may be tenant email or agency email
+        intent.putExtra("tenant_email", email_of_tenant); // this is agency email
         startActivity(intent); // going to intro layout - REST
         finish();
     }

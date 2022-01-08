@@ -22,13 +22,21 @@ import java.util.Collection;
     ArrayList<Property> registered_props;
     ArrayList<Property> props_list_filer;
 
+    String tenant_agency="";
     Context context;
 
-    public PropertyAdpter(ArrayList<Property> registered_props,UI_Activity activity){
-        this.registered_props = registered_props;
-        this.context = activity;
-        this.props_list_filer= new ArrayList<Property>(registered_props);
-    }
+//    public PropertyAdpter(ArrayList<Property> registered_props,UI_Activity activity){
+//        this.registered_props = registered_props;
+//        this.context = activity;
+//        this.props_list_filer= new ArrayList<Property>(registered_props);
+//    }
+    public PropertyAdpter(ArrayList<Property> registered_props,UI_Activity activity,String tenant_agency){
+            this.registered_props = registered_props;
+            this.context = activity;
+            this.props_list_filer= new ArrayList<Property>(registered_props);
+            this.tenant_agency=tenant_agency;
+        }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,16 +59,19 @@ import java.util.Collection;
         holder.pro_price_tv.setText(Double.toString(prop_list.getRental_price()));
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Application is going to be opened ", Toast.LENGTH_SHORT).show();
-                // list of prop added for instance statically just to test ya man
-               //here is the actual work of each prop in hte list -- when click on the card item
-                application_form_of_property(prop_list,holder);
-            }
-        });
-    }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Application is going to be opened ", Toast.LENGTH_SHORT).show();
+                    // list of prop added for instance statically just to test ya man
+                    //here is the actual work of each prop in hte list -- when click on the card item
+                    if (tenant_agency.equals("0"))
+                         application_form_of_property(prop_list, holder);
+                    else edit_list_by_agency();
+                }
+            });
+        }
 
     @Override
     public int getItemCount() {
@@ -141,7 +152,10 @@ import java.util.Collection;
         intent.putExtra("prop_status",property.getStatus());
         intent.putExtra("prop_price",Double.toString(property.getRental_price()));
         intent.putExtra("prop_postal",property.getPostal_address());
-
+        intent.putExtra("agency_or_tenant","0");
         context.startActivity(intent);
+    }
+    void edit_list_by_agency(){
+
     }
 }

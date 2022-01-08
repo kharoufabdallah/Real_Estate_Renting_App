@@ -1,11 +1,10 @@
 // BUGS:
 1. login ( password query ) edit integration with email
-2. agency profile fix
-3. redundancy in records in home page is solved
 4.pictures of properties in home page
 5. line 141 in addProperty activity --> get image Uri and assign it to the property
-
+6. hi, null --> tenant profile bug - solve
 
 // todo:
 1. application
-2. add advertiser to the peroperty in application --> create new table of the database
+2. history of agency
+3. edit property

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.nio.DoubleBuffer;
 
+//
 public class ApplicationForm extends AppCompatActivity {
     ImageView prop_ic;
     TextView date;
@@ -25,6 +26,9 @@ public class ApplicationForm extends AppCompatActivity {
     TextView price;
     TextView status;
     TextView bed;
+
+
+    String tenant_or_agency="";
 
 
     Button back;
@@ -49,6 +53,8 @@ public class ApplicationForm extends AppCompatActivity {
         apply=findViewById(R.id.apply);
 
 
+     //   tenant_or_agency= getIntent().getStringExtra("tenant_or_agency").toString();
+
         property = new Property(getIntent().getStringExtra("prop_city"),
                 getIntent().getStringExtra("prop_postal"),
                 Double.parseDouble(getIntent().getStringExtra("prop_surface")),
@@ -67,7 +73,7 @@ public class ApplicationForm extends AppCompatActivity {
 
         back.setOnClickListener(v -> {
             Intent intent=new Intent(ApplicationForm.this,UI_Activity.class);
-
+            intent.putExtra("agency_or_tenant","0");
             startActivity(intent);
             finish();
         });

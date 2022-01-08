@@ -47,6 +47,9 @@ public class TenantProfile extends AppCompatActivity {
 
             setContentView(R.layout.tenant_profile);
 
+            String  emailfromUI = getIntent().getStringExtra("tenant_email");
+            String  namefromUI  = getIntent().getStringExtra("tenant_name");
+
 
             nameTv    = (TextView) findViewById(R.id.name_tvprofile);
             hiTv      = (TextView) findViewById(R.id.tv1hi_profile);
@@ -96,14 +99,9 @@ public class TenantProfile extends AppCompatActivity {
             alrtdialog2.show();
         });
 
-            String emailfromUI = getIntent().getStringExtra("tenant_email").toString();
-            String namefromUI = getIntent().getStringExtra("tenant_name").toString();
-
             db = new DataBaseHelper(TenantProfile.this);
             String last_name = db.getLastName_emailKey(emailfromUI);
             String nat = db.getNat_emailKey(emailfromUI);
-
-
 
             avatar.setImageResource(R.drawable.flag_palestine);
 
@@ -116,8 +114,9 @@ public class TenantProfile extends AppCompatActivity {
 
             back_main_menu.setOnClickListener(v-> {
                 Intent intent=new Intent(TenantProfile.this,UI_Activity.class);
+                intent.putExtra("agency_or_tenant","0");
                 intent.putExtra("tenant_name",namefromUI);
-                intent.putExtra("tenant_email",emailfromUI);
+                intent.putExtra("tenant_email",getIntent().getStringExtra("tenant_email"));
                 startActivity(intent); // going to intro layout - REST
                 finish();
             });
