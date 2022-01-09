@@ -1,8 +1,8 @@
 // BUGS:
 1. login ( password query ) edit integration with email
 4.pictures of properties in home page
-5. line 141 in addProperty activity --> get image Uri and assign it to the property
-6. hi, null --> tenant profile bug - solve
+5. you are not authorized- edit property --> retured agencyID is 0 -- DB retrieval problem --else works fine
+6. enter edit then bakc to agency profile ---- bug !!! putExtra() work also in tenant_profile
 
 
 // bug: when click on card and get back to UI --> tenant_email should be sent form the application form

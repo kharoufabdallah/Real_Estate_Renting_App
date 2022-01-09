@@ -16,90 +16,109 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.026">
 
-        <TextView
-            android:id="@+id/tvdetailsAgency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Property Application" />
-
         <ImageView
             android:id="@+id/porp_icAgency"
             android:layout_width="match_parent"
-            android:layout_height="133dp"
+            android:layout_height="4dp"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <EditText
+            android:id="@+id/emailAgEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Email for Security"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/submitEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FF1111"
+            android:text="Submit email"
+            android:textColor="#08186E" />
 
         <TextView
             android:id="@+id/tvapp_cityAgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
+            android:background="#00BCD4"
             android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/tvapp_postalAgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="57dp"
+            android:background="#00BCD4"
             android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/tvapp_surfaceareaAgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="43dp"
+            android:background="#00BCD4"
             android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/tvapp_constyearAgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
+            android:background="#00BCD4"
             android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/tvapp_numbedAgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="47dp"
+            android:background="#00BCD4"
             android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/ttvapp_statusAgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
+            android:background="#00BCD4"
             android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/tvapp_priceAgency"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="83dp"
+            android:background="#00BCD4"
             android:gravity="center"
             android:text="TextView"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/editAPPAgencyB"
+        <TextView
+            android:id="@+id/to_dd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:text="APPLY to rent this property"
-            android:textColor="#FF0000" />
+            android:background="#9C27B0"
+            android:gravity="center"
+            android:text="* To Edit Property's data, just click on the field you need to edit"
+            android:textStyle="bold|italic" />
+
         <Button
             android:id="@+id/delete_appAgency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             android:text="delete this property"
-            android:textColor="#FF0000" />
+            android:textColor="#0B175A" />
+
         <Button
             android:id="@+id/back_appAgency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             android:text="back to home page"
-            android:textColor="#FF0000" />
+            android:textColor="#0B175A" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

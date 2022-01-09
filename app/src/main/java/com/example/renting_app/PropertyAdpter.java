@@ -166,7 +166,10 @@ import java.util.Collection;
         intent.putExtra("prop_status",property.getStatus());
         intent.putExtra("prop_price",Double.toString(property.getRental_price()));
         intent.putExtra("prop_postal",property.getPostal_address());
-        intent.putExtra("agency_or_tenant","0");
+
+
+        intent.putExtra("agency_or_tenant","1");
+
         context.startActivity(intent);
     }
 }

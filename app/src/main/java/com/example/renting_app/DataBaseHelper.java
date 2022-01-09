@@ -194,10 +194,15 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     }
 
     public int getID_fromEmail_agency(String email){
-        int id=0;
+        int id=1;
         SQLiteDatabase db = getReadableDatabase();
-        Cursor curs = db.rawQuery("Select agency_id from AGENCY where agency_email like '"+"%"+email+"%"+"'",null);
-        if (curs.moveToFirst())id  = curs.getInt(0);
+        Cursor curs = db.rawQuery("Select agency_id from AGENCY WHERE agency_email LIKE '"+"%"+email+"%"+"'",null);
+        if (curs.moveToFirst()) id = curs.getInt(0);
+        //   return  id;
+        //    }
+        //    catch (SQLException e) {
+
+        ///  }
         return id;
     }
     public int getID_of_prop (Property property)
@@ -213,6 +218,13 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
       ///  }
         return id;
+    }
+    public String testRel_ids(int agencyid,int propid)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select property_city from PROP_AGENCY where agency_id like '" +  agencyid + "' and prop_id='" +  propid + "'", null);
+        if (cursor.moveToFirst()) return cursor.getString(0);
+        else return null;
     }
     public String getNameFromEmail(String email)
     {
@@ -241,7 +253,41 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("update TENANT set nationality = '" + new_nat  + "'" +"where tenant_email LIKE '"+"%"+email+"%"+"'");
     }
-
+    public void update_city_in_agency(Property property,String new_city)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update PROPERTY set city = '" + new_city  + "'" +"where postal_address LIKE '"+"%"+property.getPostal_address()+"%"+"'");
+    }
+    public void update_postal_in_property(Property property,String new_postal)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update PROPERTY set postal_address = '" + new_postal  + "'" +"where rental_price LIKE '"+"%"+property.getRental_price()+"%"+"'");
+    }
+    public void update_bed_in_property(Property property,String new_bed)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update PROPERTY set bedroom_no = '" + new_bed  + "'" +"where postal_address LIKE '"+"%"+property.getPostal_address()+"%"+"'");
+    }
+    public void update_const_in_property(Property property,String new_year)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update PROPERTY set const_year = '" + new_year  + "'" +"where postal_address LIKE '"+"%"+property.getPostal_address()+"%"+"'");
+    }
+    public void update_surface_in_property(Property property,String new_surf)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update PROPERTY set surface_area = '" + new_surf  + "'" +"where postal_address LIKE '"+"%"+property.getPostal_address()+"%"+"'");
+    }
+    public void update_price_in_property(Property property,String new_price)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update PROPERTY set rental_price = '" + new_price  + "'" +"where postal_address LIKE '"+"%"+property.getPostal_address()+"%"+"'");
+    }
+    public void update_status_in_property(Property property,String new_status)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("update PROPERTY set status = '" + new_status  + "'" +"where postal_address LIKE '"+"%"+property.getPostal_address()+"%"+"'");
+    }
     public void insertPropMan(Property property){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues vs = new ContentValues();
