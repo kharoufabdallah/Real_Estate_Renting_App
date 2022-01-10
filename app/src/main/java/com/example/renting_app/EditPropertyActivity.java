@@ -312,7 +312,7 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
-            //compare process -- a boolean
+
             boolean match = compare_if_match(AgencyId,PropId);
             if (match) {
                 statusEdit.setText(status.getText());

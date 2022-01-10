@@ -85,6 +85,7 @@ public class ApplicationForm extends AppCompatActivity {
         price.setText(Double.toString(property.getRental_price()) + " $");
 
 
+        to_send_email  = getEmail.getText().toString();
 
 
         subEmail.setOnClickListener(v -> {
@@ -95,7 +96,8 @@ public class ApplicationForm extends AppCompatActivity {
             to_send_email  = getEmail.getText().toString();
         });
 
-        tenant_id = db.getIDfromEmail_tenant(to_send_email);
+        if(to_send_email!=null || !to_send_email.equals(""))
+            tenant_id = db.getIDfromEmail_tenant(to_send_email);
         prop_id = db.getID_of_prop(property);
 
         back.setOnClickListener(v -> {
@@ -133,7 +135,9 @@ public class ApplicationForm extends AppCompatActivity {
     }
     public void push_tenant_prop_db()
     {
+        tenant_id = db.getIDfromEmail_tenant(to_send_email);
         DataBaseHelper db = new DataBaseHelper(ApplicationForm.this);
-        db.applicant_insert(property,to_send_email,tenant_id,prop_id);
+        if(to_send_email==null || to_send_email.equals("")) getEmail.setError("Email is not submitted");
+        else db.applicant_insert(property,to_send_email,tenant_id,prop_id);
     }
 }

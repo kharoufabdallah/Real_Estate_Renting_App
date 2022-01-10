@@ -5,6 +5,7 @@
 6. enter edit then bakc to agency profile ---- bug !!! putExtra() work also in tenant_profile
 7. solve bugs in edit -- retretured agencyID and propID is 0 -- DB retrieval problem --else works fine
 8. test delete proprety
+9. application (apply -> insertion into tenant_prop --> tenant_name = nulll ) fixxxxx
 
 
 

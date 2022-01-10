@@ -202,7 +202,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     }
     public int getIDfromEmail_tenant(String email)
     {
-        int id = 1;
+        int id = 0;
         // try {
         SQLiteDatabase db = getReadableDatabase();
         Cursor curs = db.rawQuery("Select tenant_id from TENANT where tenant_email LIKE '"+ email+ "'",null);
