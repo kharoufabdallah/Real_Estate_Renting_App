@@ -194,15 +194,19 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     }
 
     public int getID_fromEmail_agency(String email){
-        int id=1;
+        int id=0;
         SQLiteDatabase db = getReadableDatabase();
         Cursor curs = db.rawQuery("Select agency_id from AGENCY WHERE agency_email LIKE '"+"%"+email+"%"+"'",null);
         if (curs.moveToFirst()) id = curs.getInt(0);
-        //   return  id;
-        //    }
-        //    catch (SQLException e) {
-
-        ///  }
+        return id;
+    }
+    public int getIDfromEmail_tenant(String email)
+    {
+        int id = 1;
+        // try {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select tenant_id from TENANT where tenant_email LIKE '"+ email+ "'",null);
+        if (curs.moveToFirst()) id = curs.getInt(0);
         return id;
     }
     public int getID_of_prop (Property property)
@@ -219,13 +223,36 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
       ///  }
         return id;
     }
-    public String testRel_ids(int agencyid,int propid)
+
+    public void delete_prop_from_db(Property property)
     {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("Select property_city from PROP_AGENCY where agency_id like '" +  agencyid + "' and prop_id='" +  propid + "'", null);
+        db.delete("PROPERTY","postal_address=? and surface_area=? and const_year=? ",new String[]{property.getPostal_address(),Double.toString(property.getSurface_area()),Integer.toString(property.getConst_year())});
+    }
+    public void applicant_insert(Property property,String tenant_email,int tenant_id,int prop_id) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues  vs = new ContentValues();
+        vs.put("prop_id",prop_id);
+        vs.put("TENANT_id",tenant_id);
+        vs.put("TENANT_name",tenant_email);
+        vs.put("property_city",property.getCity());
+        db.insert("PROP_TENANT",null,vs);
+    }
+    public String testRel_ids(String agencyEm,int propid)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select property_city from PROP_AGENCY where agency_name like '" +  agencyEm + "' and prop_id='" +  propid + "'", null);
         if (cursor.moveToFirst()) return cursor.getString(0);
         else return null;
     }
+
+//    public String testRel_ids(int agencyid,int propid)
+//    {
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.rawQuery("Select property_city from PROP_AGENCY where agency_id like '" +  agencyid + "' and prop_id='" +  propid + "'", null);
+//        if (cursor.moveToFirst()) return cursor.getString(0);
+//        else return null;
+//    }
     public String getNameFromEmail(String email)
     {
         String name = null;

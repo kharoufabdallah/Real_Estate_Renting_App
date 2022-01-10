@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,18 +28,26 @@ public class ApplicationForm extends AppCompatActivity {
     TextView status;
     TextView bed;
 
+    String to_send_email;
 
+    EditText getEmail;
+    Button subEmail;
     String tenant_or_agency="";
 
+    DataBaseHelper db;
 
     Button back;
     Button apply;
 
+    int tenant_id;
+    int prop_id;
     Property property;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_form);
+
+        db =new DataBaseHelper(ApplicationForm.this);
 
         prop_ic = findViewById(R.id.porp_ic);
         date = findViewById(R.id.tvapp_constyear);
@@ -52,6 +61,10 @@ public class ApplicationForm extends AppCompatActivity {
         back =findViewById(R.id.back_app);
         apply=findViewById(R.id.apply);
 
+        prop_ic.setImageResource(R.drawable.flag_belgium);
+
+        subEmail=findViewById(R.id.submit_app_emSec);
+        getEmail=findViewById(R.id.emailAPP_sec);
 
      //   tenant_or_agency= getIntent().getStringExtra("tenant_or_agency").toString();
 
@@ -71,6 +84,20 @@ public class ApplicationForm extends AppCompatActivity {
         status.setText("status is " + property.getStatus());
         price.setText(Double.toString(property.getRental_price()) + " $");
 
+
+
+
+        subEmail.setOnClickListener(v -> {
+            if (getEmail.getText().toString().isEmpty()) {
+                getEmail.setError("Cannot be empty, enter agency email");
+                return;
+            }
+            to_send_email  = getEmail.getText().toString();
+        });
+
+        tenant_id = db.getIDfromEmail_tenant(to_send_email);
+        prop_id = db.getID_of_prop(property);
+
         back.setOnClickListener(v -> {
             Intent intent=new Intent(ApplicationForm.this,UI_Activity.class);
             intent.putExtra("agency_or_tenant","0");
@@ -79,16 +106,21 @@ public class ApplicationForm extends AppCompatActivity {
         });
 
         apply.setOnClickListener(v -> {
+            if (getEmail.getText().toString().isEmpty()) {
+                getEmail.setError("Cannot be empty, enter tenant email");
+                return;
+            }
             popNotification();
-            Toast.makeText(this,"SDFSDF",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"notification sent",Toast.LENGTH_SHORT).show();
+            push_tenant_prop_db();
         });
     }
     public void popNotification() {
         // Builds your notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_search_black_24dp)
-                .setContentTitle("John's Android Studio Tutorials")
-                .setContentText("A video has just arrived!");
+                .setContentTitle("A tenant needs to rent your property")
+                .setContentText("press to see details");
 
         // Creates the intent needed to show the notification
         Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -98,5 +130,10 @@ public class ApplicationForm extends AppCompatActivity {
         // Add as notification
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
+    }
+    public void push_tenant_prop_db()
+    {
+        DataBaseHelper db = new DataBaseHelper(ApplicationForm.this);
+        db.applicant_insert(property,to_send_email,tenant_id,prop_id);
     }
 }

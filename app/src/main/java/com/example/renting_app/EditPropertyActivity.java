@@ -112,7 +112,6 @@ public class EditPropertyActivity extends AppCompatActivity {
 
         agencyProp = new RelAgencyProp(AgencyId,PropId,property.getCity(),emailtocompare);
 
-
         date.setText(Integer.toString(property.getConst_year()));
         city.setText(property.getCity());
         bed.setText(Integer.toString(property.getBedroom_no())+" rooms");
@@ -122,6 +121,21 @@ public class EditPropertyActivity extends AppCompatActivity {
         price.setText(Double.toString(property.getRental_price()) + " $");
 
 
+        delete.setOnClickListener(v ->
+        {
+            if (emailMain.getText().toString().isEmpty()) {
+            emailMain.setError("Cannot be empty, enter agency email");
+            return;
+        }
+            boolean match = compare_if_match(AgencyId,PropId);
+            if (match) {
+                DataBaseHelper db =new DataBaseHelper(EditPropertyActivity.this);
+                db.delete_prop_from_db(property);
+            }
+            else {Toast.makeText(this,"You are not authorized to change data in this property",Toast.LENGTH_SHORT).show();
+                emailMain.setError("Not authorized to perform action, you don't own this property "+AgencyId+" "+PropId);
+            }
+        });
         subEmail.setOnClickListener(v -> {
             if (emailMain.getText().toString().isEmpty()) {
                 emailMain.setError("Cannot be empty, enter agency email");
@@ -358,7 +372,7 @@ public class EditPropertyActivity extends AppCompatActivity {
     {
         db = new DataBaseHelper(EditPropertyActivity.this);
         String tester;
-        tester = db.testRel_ids(agency_id,prop_id);
+        tester = db.testRel_ids(emailtocompare,prop_id);
         return tester != null;
     }
 }

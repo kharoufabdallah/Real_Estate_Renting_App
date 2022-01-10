@@ -23,6 +23,22 @@
             android:gravity="center"
             android:text="Property Application" />
 
+        <EditText
+            android:id="@+id/emailAPP_sec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Tenant Email for security"
+            android:inputType="textEmailAddress" />
+
+        <Button
+            android:id="@+id/submit_app_emSec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:text="submit email"
+            android:textColor="#1A2A7E" />
+
         <ImageView
             android:id="@+id/porp_ic"
             android:layout_width="match_parent"
