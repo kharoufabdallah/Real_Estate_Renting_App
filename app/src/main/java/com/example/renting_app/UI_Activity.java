@@ -163,7 +163,9 @@ public class UI_Activity extends AppCompatActivity {
 //                        return true;
                         break;
                     case R.id.nav_history:
-                        call_rental_history_popup();
+                        if(getIntent().getStringExtra("agency_or_tenant").equals("0"))
+                             call_rental_history_popup();
+                        else Toast.makeText(UI_Activity.this, "Entered as tenant", Toast.LENGTH_SHORT).show();
                         //   return true;
                         break;
                     case R.id.nav_logout:
@@ -270,15 +272,15 @@ public class UI_Activity extends AppCompatActivity {
 //        fragmentTransaction.commit();
 
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
+//        DisplayMetrics metrics = getResources().getDisplayMetrics();
+//        int width = metrics.widthPixels;
+//        int height = metrics.heightPixels;
 
 
         final Dialog dialog = new Dialog(UI_Activity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.getWindow().setLayout((6 * width) / 7, DrawerLayout.LayoutParams.WRAP_CONTENT);
+    //    dialog.getWindow().setLayout((6 * width) / 7, DrawerLayout.LayoutParams.WRAP_CONTENT);
         dialog.setContentView(R.layout.fragment_rental_history_pop_up);
         dialog.show();
     }

@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nsv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RentalHistoryPopUpFragment"/>
+    android:orientation="vertical"
+    android:background="#BDBDBD"
+    tools:context=".RentalHistoryPopUpFragment">
+
+    <Button
+        android:id="@+id/buttonChoose_Ten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@empty"
+        android:backgroundTint="#4CAF50"
+        android:text="Tenant History" />
+
+    <Button
+        android:id="@+id/buttonChoose_Agency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#F44336"
+        android:text="Agency History" />
+
+</LinearLayout>
