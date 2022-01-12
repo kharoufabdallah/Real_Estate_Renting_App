@@ -3,12 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".TenantMainHistory">
+
+    <Button
+        android:id="@+id/back_tomain_histttttttttt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:text="Back to home page "
+        android:textColor="#ED0D0D"
+        android:textColorHighlight="#3F51B5"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_view_hist_tenant"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>

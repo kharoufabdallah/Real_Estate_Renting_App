@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,12 @@ class RentalHistoryPopUpFragment extends DialogFragment {
                                       Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rental_history_pop_up, container, false);
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Toast.makeText(getActivity(),"DSADADSADA",Toast.LENGTH_SHORT).show();
         tenB = view.findViewById(R.id.buttonChoose_Ten);
         agenB = view.findViewById(R.id.buttonBack_fromAgency);
 
@@ -45,12 +52,6 @@ class RentalHistoryPopUpFragment extends DialogFragment {
         agenB.setOnClickListener(v->{
 
         });
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
 
     }
 

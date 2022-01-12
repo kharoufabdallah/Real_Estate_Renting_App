@@ -8,7 +8,7 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_history"
-            android:icon="@android:drawable/ic_menu_myplaces"
+            android:icon="@android:drawable/ic_menu_mapmode"
             android:title="Renting History" />
         <item
             android:id="@+id/nav_account"
@@ -31,10 +31,6 @@
             android:id="@+id/nav_edit_prop"
             android:icon="?android:attr/actionModeFindDrawable"
             android:title="Edit Properties - for agencies" />
-        <item
-            android:id="@+id/nav_history_agency"
-            android:icon="@android:drawable/ic_menu_mapmode"
-            android:title="Rental History of Agency" />
         <item
             android:id="@+id/nav_agency_acc"
             android:icon="@android:drawable/ic_menu_view"

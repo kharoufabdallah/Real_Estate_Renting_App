@@ -6,30 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-/// todo: this is adapter for tenant histories
-public class TenantHistoryAdapter extends RecyclerView.Adapter<TenantHistoryAdapter.ViewHolder>{
+public class AgencyHistoryAdpater  extends RecyclerView.Adapter<AgencyHistoryAdpater.ViewHolder> {
 
-    ArrayList<RelTenantProp> tenants_props;
+    ArrayList<RelAgencyProp> agencyProps;
+    Context c;
 
-    String tenant_agency="";
-    Context context;
-
-        public TenantHistoryAdapter(ArrayList<RelTenantProp> tenants_props, Context activity){
-        this.tenants_props = tenants_props;
-        this.context = activity;
+    public AgencyHistoryAdpater(ArrayList<RelAgencyProp> tenants_props, Context activity){
+        this.agencyProps = tenants_props;
+        this.c = activity;
     }
 
     @NonNull
     @Override
-    public TenantHistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AgencyHistoryAdpater.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.tenant_history_list,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -37,9 +32,9 @@ public class TenantHistoryAdapter extends RecyclerView.Adapter<TenantHistoryAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView imgview;
-            TextView prop_city;
-            TextView prop_id;
+        ImageView imgview;
+        TextView prop_city;
+        TextView prop_id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,13 +44,14 @@ public class TenantHistoryAdapter extends RecyclerView.Adapter<TenantHistoryAdap
 
         }
     }
+
     @Override
-    public void onBindViewHolder(@NonNull TenantHistoryAdapter.ViewHolder holder, int position) {
-        final RelTenantProp prop_list = tenants_props.get(position);
+    public void onBindViewHolder(@NonNull AgencyHistoryAdpater.ViewHolder holder, int position) {
+        final RelAgencyProp prop_list = agencyProps.get(position);
 
         holder.prop_city.setText(prop_list.getProp_city());
         holder.prop_id.setText(Integer.toString(prop_list.getProp_id()));
-        holder.imgview.setImageResource(R.drawable.flag_czech_republic);
+        holder.imgview.setImageResource(R.drawable.flag_vatican_city);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +63,6 @@ public class TenantHistoryAdapter extends RecyclerView.Adapter<TenantHistoryAdap
 
     @Override
     public int getItemCount() {
-        return tenants_props.size();
+        return agencyProps.size();
     }
 }

@@ -11,7 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -20,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +61,7 @@ public class UI_Activity extends AppCompatActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
     final RentalHistoryPopUpFragment cuf2 = new RentalHistoryPopUpFragment();
 
+    AlertDialog historyChooseDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +104,8 @@ public class UI_Activity extends AppCompatActivity {
         propertyAdpter = new PropertyAdpter(po, UI_Activity.this,tenant_agency);
         rv.setAdapter(propertyAdpter);
 
+        historyChooseDialog = new AlertDialog.Builder(this).create();
+
         minbed.setOnClickListener(v -> {
             Collections.sort(po,Property.sortBedroom);
             propertyAdpter = new PropertyAdpter(po,UI_Activity.this,tenant_agency);
@@ -126,6 +132,29 @@ public class UI_Activity extends AppCompatActivity {
             rv.setAdapter(propertyAdpter);
         });
 
+        historyChooseDialog.setTitle("Choose Type of History");
+        historyChooseDialog.setIcon(R.drawable.ic_baseline_plus_one_24);
+        historyChooseDialog.setButton( "Tenant", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(getIntent().getStringExtra("agency_or_tenant").equals("0")) {
+                    Intent intent = new Intent(UI_Activity.this, TenantMainHistory.class);
+                    startActivity(intent); // going to intro layout - REST
+                    finish();
+                }else   Toast.makeText(UI_Activity.this, "You are logged in as an agency", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        historyChooseDialog.setButton2("Agency", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(getIntent().getStringExtra("agency_or_tenant").equals("1")) {
+                    Intent intent = new Intent(UI_Activity.this, AgencyMainHistory.class);
+                    startActivity(intent); // going to intro layout - REST
+                    finish();
+                }else  Toast.makeText(UI_Activity.this, "You are logged in as a tenant", Toast.LENGTH_SHORT).show();
+            }
+        });
         // to get name from email and print hi , ......
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
@@ -163,9 +192,7 @@ public class UI_Activity extends AppCompatActivity {
 //                        return true;
                         break;
                     case R.id.nav_history:
-                        if(getIntent().getStringExtra("agency_or_tenant").equals("0"))
                              call_rental_history_popup();
-                        else Toast.makeText(UI_Activity.this, "Entered as tenant", Toast.LENGTH_SHORT).show();
                         //   return true;
                         break;
                     case R.id.nav_logout:
@@ -182,8 +209,6 @@ public class UI_Activity extends AppCompatActivity {
                         else Toast.makeText(UI_Activity.this, "cannot perform action", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_edit_prop:
-                        break;
-                    case R.id.nav_history_agency:
                         break;
                 }
                 return false;
@@ -265,24 +290,29 @@ public class UI_Activity extends AppCompatActivity {
     void call_rental_history_popup() {
 //        DialogFragment dialogFragment= new DialogFragment();
 //        dialogFragment.show(getSupportFragmentManager(),"RentalHistoryPopupFragment");
-
-
-        //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+// FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //        fragmentTransaction.add(R.id.my_drawer_layout, cuf2, "choose user frag");
 //        fragmentTransaction.commit();
 
+        historyChooseDialog.show();
 
 //        DisplayMetrics metrics = getResources().getDisplayMetrics();
 //        int width = metrics.widthPixels;
 //        int height = metrics.heightPixels;
 
+        //// TODO: ALERT DAILOG 
+//        // Alert Dialog
 
-        final Dialog dialog = new Dialog(UI_Activity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-    //    dialog.getWindow().setLayout((6 * width) / 7, DrawerLayout.LayoutParams.WRAP_CONTENT);
-        dialog.setContentView(R.layout.fragment_rental_history_pop_up);
-        dialog.show();
+//        if(getIntent().getStringExtra("agency_or_tenant").equals("0"))
+//        else Toast.makeText(UI_Activity.this, "Entered as tenant", Toast.LENGTH_SHORT).show();
+
+
+//        final Dialog dialog = new Dialog(UI_Activity.this);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setCancelable(true);
+//    //    dialog.getWindow().setLayout((6 * width) / 7, DrawerLayout.LayoutParams.WRAP_CONTENT);
+//        dialog.setContentView(R.layout.fragment_rental_history_pop_up);
+//        dialog.show();
     }
 
     void add_property_by_agency() {
