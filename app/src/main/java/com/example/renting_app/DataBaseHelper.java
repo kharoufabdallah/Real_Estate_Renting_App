@@ -340,6 +340,31 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return nat;
     }
 
+    public ArrayList<RelTenantProp> store_recs_in_al_2nd_version(String name) {
+        ArrayList<RelTenantProp> prop_list = new ArrayList<RelTenantProp>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from PROP_TENANT where TENANT_name like '"+"%"+name+"%"+"'",null);
+        while(cursor.moveToNext())
+        {
+            prop_list.add(new RelTenantProp(cursor.getInt(1),cursor.getInt(0),cursor.getString(3),
+                    cursor.getString(2)));
+        }
+        return prop_list;
+    }
+
+    public ArrayList<RelAgencyProp> store_recs_in_al_3rd_version(String name) {
+        ArrayList<RelAgencyProp> prop_list = new ArrayList<RelAgencyProp>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from PROP_AGENCY where agency_name like '"+"%"+name+"%"+"'",null);
+        while(cursor.moveToNext())
+        {
+            prop_list.add(new RelAgencyProp(cursor.getInt(1),cursor.getInt(0),cursor.getString(3),
+                    cursor.getString(2)));
+        }
+        return prop_list;
+    }
     public ArrayList<Property> store_recs_in_al () {
       //  String [] columns = new String[] {"city","postal_address","surface_area","const_year","bedroom_no","rental_price","status"};
 

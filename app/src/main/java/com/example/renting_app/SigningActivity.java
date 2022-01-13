@@ -59,7 +59,11 @@ public class SigningActivity extends AppCompatActivity {
         cont_guestB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent=new Intent(SigningActivity.this,UI_Activity.class);
+                intent.putExtra("tenant_email","guest@guest.com");
+                intent.putExtra("agency_or_tenant","2");
+                startActivity(intent);
+                finish();
                 }
         }); 
     }

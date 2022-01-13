@@ -73,11 +73,11 @@ public class UI_Activity extends AppCompatActivity {
         email_of_tenant = getIntent().getStringExtra("tenant_email");// email of both
 
 
-        if(getIntent().getStringExtra("agency_or_tenant").equals("0")) { //tenant
+        if(tenant_agency.equals("0")) { //tenant getIntent().getStringExtra("agency_or_tenant")
             db = new DataBaseHelper(UI_Activity.this);
             name_of_tenant = db.getNameFromEmail(email_of_tenant);
         }
-        else { // 1 -> agency
+        else if(tenant_agency.equals("1")){ // 1 -> agency
             db = new DataBaseHelper(UI_Activity.this);
             name_of_agency = db.getNameFromEmail_agency(email_of_tenant);
         }
@@ -133,15 +133,21 @@ public class UI_Activity extends AppCompatActivity {
         });
 
         historyChooseDialog.setTitle("Choose Type of History");
-        historyChooseDialog.setIcon(R.drawable.ic_baseline_plus_one_24);
+        historyChooseDialog.setIcon(R.drawable.ic_baseline_view_compact_24);
         historyChooseDialog.setButton( "Tenant", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(getIntent().getStringExtra("agency_or_tenant").equals("0")) {
                     Intent intent = new Intent(UI_Activity.this, TenantMainHistory.class);
+                    intent.putExtra("tenant_email",getIntent().getStringExtra("tenant_email").toString());
+                    intent.putExtra("agency_or_tenant",getIntent().getStringExtra("agency_or_tenant"));
                     startActivity(intent); // going to intro layout - REST
                     finish();
-                }else   Toast.makeText(UI_Activity.this, "You are logged in as an agency", Toast.LENGTH_SHORT).show();
+                }else   if(getIntent().getStringExtra("agency_or_tenant").equals("1")) {
+                    Toast.makeText(UI_Activity.this, "You are logged in as an agency", Toast.LENGTH_SHORT).show();
+                }
+                else  Toast.makeText(UI_Activity.this, "You are logged in as a guest", Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -150,9 +156,15 @@ public class UI_Activity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(getIntent().getStringExtra("agency_or_tenant").equals("1")) {
                     Intent intent = new Intent(UI_Activity.this, AgencyMainHistory.class);
+                    intent.putExtra("tenant_email",getIntent().getStringExtra("tenant_email").toString());
+                    intent.putExtra("agency_or_tenant",getIntent().getStringExtra("agency_or_tenant"));
                     startActivity(intent); // going to intro layout - REST
                     finish();
-                }else  Toast.makeText(UI_Activity.this, "You are logged in as a tenant", Toast.LENGTH_SHORT).show();
+                }
+                else if (getIntent().getStringExtra("agency_or_tenant").equals("0")) {
+                    Toast.makeText(UI_Activity.this, "You are logged in as a tenant", Toast.LENGTH_SHORT).show();
+                }
+                else Toast.makeText(UI_Activity.this, "You are logged in as a guest", Toast.LENGTH_SHORT).show();
             }
         });
         // to get name from email and print hi , ......
@@ -178,21 +190,24 @@ public class UI_Activity extends AppCompatActivity {
                         Toast.makeText(UI_Activity.this, "You are in home page", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_search:
+                        Toast.makeText(UI_Activity.this, "Search is done on the top", Toast.LENGTH_SHORT).show();
                         break;
                     //return true;
                     case R.id.nav_agency_acc:
                         if(getIntent().getStringExtra("agency_or_tenant").equals("1"))
                             call_agency_profile();
-                        else Toast.makeText(UI_Activity.this, "Entered as tenant", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(UI_Activity.this, "Entered as tenant/guest", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_account:
                         if(getIntent().getStringExtra("agency_or_tenant").equals("0"))
                             call_profile_show_activity(); // not dialog to enable passing data from/to UI and child activities!
-                        else Toast.makeText(UI_Activity.this, "Entered as agency", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(UI_Activity.this, "Entered as agency/guest", Toast.LENGTH_SHORT).show();
 //                        return true;
                         break;
                     case R.id.nav_history:
+                        if(getIntent().getStringExtra("agency_or_tenant").equals("0") ||getIntent().getStringExtra("agency_or_tenant").equals("1"))
                              call_rental_history_popup();
+                        else Toast.makeText(UI_Activity.this, "No History for guest, please sign up", Toast.LENGTH_SHORT).show();
                         //   return true;
                         break;
                     case R.id.nav_logout:
@@ -206,9 +221,10 @@ public class UI_Activity extends AppCompatActivity {
                     case R.id.nav_add_prop:
                         if(tenant_agency.equals("1"))
                              add_property_by_agency();
-                        else Toast.makeText(UI_Activity.this, "cannot perform action", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(UI_Activity.this, "cannot perform action, entered as guest/tenant", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_edit_prop:
+                        Toast.makeText(UI_Activity.this, "Editing is done for agencies, click on the property you need to edit", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -295,10 +311,6 @@ public class UI_Activity extends AppCompatActivity {
 //        fragmentTransaction.commit();
 
         historyChooseDialog.show();
-
-//        DisplayMetrics metrics = getResources().getDisplayMetrics();
-//        int width = metrics.widthPixels;
-//        int height = metrics.heightPixels;
 
         //// TODO: ALERT DAILOG 
 //        // Alert Dialog

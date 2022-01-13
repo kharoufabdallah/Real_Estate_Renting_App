@@ -66,7 +66,7 @@ public class ApplicationForm extends AppCompatActivity {
         subEmail=findViewById(R.id.submit_app_emSec);
         getEmail=findViewById(R.id.emailAPP_sec);
 
-     //   tenant_or_agency= getIntent().getStringExtra("tenant_or_agency").toString();
+        tenant_or_agency= getIntent().getStringExtra("agency_or_tenant");
 
         property = new Property(getIntent().getStringExtra("prop_city"),
                 getIntent().getStringExtra("prop_postal"),
@@ -89,11 +89,15 @@ public class ApplicationForm extends AppCompatActivity {
 
 
         subEmail.setOnClickListener(v -> {
-            if (getEmail.getText().toString().isEmpty()) {
+            if(getIntent().getStringExtra("agency_or_tenant").equals("2")){
+                getEmail.setError("Entered as guest, cannot apply to rent properties");
+                return;
+            }
+            else if (getEmail.getText().toString().isEmpty()) {
                 getEmail.setError("Cannot be empty, enter agency email");
                 return;
             }
-            to_send_email  = getEmail.getText().toString();
+            else  to_send_email  = getEmail.getText().toString();
         });
 
         if(to_send_email!=null || !to_send_email.equals(""))
@@ -102,19 +106,25 @@ public class ApplicationForm extends AppCompatActivity {
 
         back.setOnClickListener(v -> {
             Intent intent=new Intent(ApplicationForm.this,UI_Activity.class);
-            intent.putExtra("agency_or_tenant","0");
+            intent.putExtra("agency_or_tenant",getIntent().getStringExtra("agency_or_tenant"));
             startActivity(intent);
             finish();
         });
 
         apply.setOnClickListener(v -> {
-            if (getEmail.getText().toString().isEmpty()) {
+            if(getIntent().getStringExtra("agency_or_tenant").equals("2")) {
+                getEmail.setError("Entered as guest, cannot apply to rent properties");
+                return;
+            }
+            else if (getEmail.getText().toString().isEmpty()) {
                 getEmail.setError("Cannot be empty, enter tenant email");
                 return;
             }
-            popNotification();
-            Toast.makeText(this,"notification sent",Toast.LENGTH_SHORT).show();
-            push_tenant_prop_db();
+            else {
+                popNotification();
+                Toast.makeText(this, "notification sent", Toast.LENGTH_SHORT).show();
+                push_tenant_prop_db();
+            }
         });
     }
     public void popNotification() {

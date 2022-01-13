@@ -29,7 +29,7 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,String> {
 
     @Override
     protected void onPreExecute() {
-        ((IntroActivity) activity).setButtonText("connecting");
+        ((IntroActivity) activity).setButtonText("connecting ...");
         super.onPreExecute();
         ((IntroActivity) activity).setProgress(true);
     }
@@ -42,7 +42,7 @@ public class ConnectionAsyncTask extends AsyncTask<String,String,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         ((IntroActivity) activity).setProgress(false);
-        ((IntroActivity) activity).setButtonText("connected");
+        ((IntroActivity) activity).setButtonText("connected, click to continue");
         List<Property> properties =
                 PropertyJsonParser.getObjectFromJason(s);
       //  assert properties != null;
