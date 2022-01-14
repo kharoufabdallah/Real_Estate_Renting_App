@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +42,8 @@ public class EditPropertyActivity extends AppCompatActivity {
   //  Button edit;
     Button delete;
 
+    SharedPreferences shared;
+    SharedPreferences.Editor edit_shared;
 
     AlertDialog alrtdialog_city;
     AlertDialog alrtdialog_postal;
@@ -106,8 +109,13 @@ public class EditPropertyActivity extends AppCompatActivity {
                 Double.parseDouble(getIntent().getStringExtra("prop_price"))
                 ,getIntent().getStringExtra("prop_status"));
 
+
+        shared = getSharedPreferences("email_of_user_shared",MODE_PRIVATE);
+        String alwyas_email = shared.getString("email_to_use","");
+
+
         //todo: solve this returning agencyId=0
-        int AgencyId = db.getID_fromEmail_agency(emailtocompare);
+        int AgencyId = db.getID_fromEmail_agency(alwyas_email);
         int PropId   = db.getID_of_prop(property);
 
         agencyProp = new RelAgencyProp(AgencyId,PropId,property.getCity(),emailtocompare);
@@ -141,6 +149,7 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email)) {emailMain.setError("does not match user's email");return;}
             emailtocompare  = emailMain.getText().toString();
         });
 
@@ -149,7 +158,7 @@ public class EditPropertyActivity extends AppCompatActivity {
         {
             Intent intent=new Intent(EditPropertyActivity.this,UI_Activity.class);
             intent.putExtra("agency_or_tenant","1");
-            intent.putExtra("tenant_email",emailtocompare); ////// solve in here
+            intent.putExtra("tenant_email",alwyas_email); ////// solve in here
             startActivity(intent);
             finish();
         });
@@ -160,6 +169,7 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email))  {emailMain.setError("Provided email does not match with user's");return;}
             //compare process -- a boolean
             boolean match = compare_if_match(AgencyId,PropId);
             if (match) {
@@ -191,9 +201,11 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email))  emailMain.setError("Provided email does not match with user's");
+
             //compare process -- a boolean
             boolean match = compare_if_match(AgencyId,PropId);
-            if (match) {
+            if (match ) {
                 postalEdit.setText(postal.getText());
                 alrtdialog_postal.show();
             }
@@ -221,6 +233,8 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email))  emailMain.setError("Provided email does not match with user's");
+
             //compare process -- a boolean
             boolean match = compare_if_match(AgencyId,PropId);
             if (match) {
@@ -251,9 +265,11 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email))  emailMain.setError("Provided email does not match with user's");
+
             //compare process -- a boolean
             boolean match = compare_if_match(AgencyId,PropId);
-            if (match) {
+            if (match ) {
                 dataEdit.setText(date.getText());
                 alrtdialog_const.show();
             }
@@ -282,9 +298,11 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email))  emailMain.setError("Provided email does not match with user's");
+
             //compare process -- a boolean
             boolean match = compare_if_match(AgencyId,PropId);
-            if (match) {
+            if (match ) {
                 surfaceEdit.setText(surface.getText());
                 alrtdialog_surface.show();
             }
@@ -312,6 +330,7 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email))  emailMain.setError("Provided email does not match with user's");
 
             boolean match = compare_if_match(AgencyId,PropId);
             if (match) {
@@ -342,6 +361,8 @@ public class EditPropertyActivity extends AppCompatActivity {
                 emailMain.setError("Cannot be empty, enter agency email");
                 return;
             }
+            if(!emailMain.getText().toString().equals(alwyas_email))  emailMain.setError("Provided email does not match with user's");
+
             //compare process -- a boolean
             boolean match = compare_if_match(AgencyId,PropId);
             if (match) {

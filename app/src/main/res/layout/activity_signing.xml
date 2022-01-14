@@ -5,9 +5,9 @@
     android:id="@+id/Root_IN"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:drawable/screen_background_dark_transparent"
     android:orientation="vertical"
-    tools:context=".SigningActivity"
-    android:background="@drawable/wpp">
+    tools:context=".SigningActivity">
 
     <TextView
         android:id="@+id/welcome_sign"

@@ -1,16 +1,12 @@
 // BUGS:
-1. login ( password query ) edit integration with email
 4.pictures of properties in home page
 5. you are not authorized- edit property --> returned agencyID is 0 -- DB retrieval problem --else works fine
 6. enter edit then bakc to agency profile ---- bug !!! putExtra() work also in tenant_profile
 7. solve bugs in edit -- retretured agencyID and propID is 0 -- DB retrieval problem --else works fine
 8. test delete proprety
-9. application (apply -> insertion into tenant_prop --> tenant_name = nulll ) fixxxxx
-
 
 
 
 // bug: when click on card and get back to UI --> tenant_email should be sent form the application form
 // todo:
 1. complete application
-2. rental history of tenant --> new table (tenant_property)+

@@ -61,7 +61,7 @@ public class Agency_login_activity extends AppCompatActivity {
             // if pass_exist == false ==> returned null from the database --> query search is wrong
 
             /// TODO: edit pass_exist in if statement
-            if (email_exists) {   /////
+            if (email_exists && pass_exists) {   /////
                 Toast.makeText(Agency_login_activity.this, "email and password found",
                         Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(Agency_login_activity.this,UI_Activity.class);
@@ -95,9 +95,9 @@ public class Agency_login_activity extends AppCompatActivity {
     boolean check_if_password_exist_in_db(String pass,String found_email)
     {
         DataBaseHelper db = new DataBaseHelper(Agency_login_activity.this);
-        String pass_returned = db.get_passfrom_data(pass,found_email);
-        if(pass_returned==null) return false;
-        return true;
+        boolean  pass_returned = db.matched_email_pass_agency(pass,found_email);
+        if(pass_returned) return true;
+        return false;
     }
     boolean check_if_email_exist_in_db(String email) {
         DataBaseHelper db = new DataBaseHelper(Agency_login_activity.this);

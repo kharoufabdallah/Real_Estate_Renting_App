@@ -15,7 +15,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +34,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
 
 /// TODO : email_tenant from login
 
@@ -62,6 +63,10 @@ public class UI_Activity extends AppCompatActivity {
     final RentalHistoryPopUpFragment cuf2 = new RentalHistoryPopUpFragment();
 
     AlertDialog historyChooseDialog;
+
+    SharedPreferences shared;
+    SharedPreferences.Editor edit_shared;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +108,13 @@ public class UI_Activity extends AppCompatActivity {
 
         propertyAdpter = new PropertyAdpter(po, UI_Activity.this,tenant_agency);
         rv.setAdapter(propertyAdpter);
+
+        shared = getSharedPreferences("email_of_user_shared",MODE_PRIVATE);
+        edit_shared = shared.edit();
+
+        edit_shared.putString("email_to_use",getIntent().getStringExtra("tenant_email"));
+
+        edit_shared.commit();
 
         historyChooseDialog = new AlertDialog.Builder(this).create();
 

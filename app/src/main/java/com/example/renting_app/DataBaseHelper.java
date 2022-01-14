@@ -157,6 +157,18 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             return cursor.getString(0);
         return null;
     }
+    public boolean matched_email_pass_agency (String pass, String email){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("SELECT * from AGENCY where agency_password like '" + pass + "' AND agency_email like '" + email +"'",null);
+        if(curs.moveToFirst()) return true;
+        return false;
+    }
+    public boolean matched_email_pass_tenant(String needed_to_search_pass,String found_email) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("SELECT * from tenant where tenant_password like '" + needed_to_search_pass + "' AND tenant_email like '" + found_email +"'",null);
+        if(curs.moveToFirst()) return true;
+        return false;
+    }
     public String get_passfrom_data(String needed_to_search_pass,String found_email){
         SQLiteDatabase db = getReadableDatabase();
         Cursor curs = db.rawQuery("SELECT * FROM TENANT WHERE tenant_password IN " +
