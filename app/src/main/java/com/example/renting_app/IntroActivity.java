@@ -90,7 +90,7 @@ public class IntroActivity extends AppCompatActivity {
         DataBaseHelper db = new DataBaseHelper(IntroActivity.this);
         db.insert_property_from_json_file(props);
         db.insert_into_prop_agency(props);
-        Toast.makeText(this, "Inserted in property DB", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "Inserted in property DB", Toast.LENGTH_SHORT).show();
     }
     public void setProgress(boolean progress) { // used here and in AsyncTask methods
         ProgressBar progressBar = (ProgressBar)

@@ -158,6 +158,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             return cursor.getString(0);
         return null;
     }
+    public boolean CheckIfRented(String city, int id){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("SELECT * from PROP_TENANT where prop_id like '" + id + "' AND property_city like '" + city +"'",null);
+        if(curs.moveToFirst()) return true;
+        return false;
+    }
     public boolean matched_email_pass_agency (String pass, String email){
         SQLiteDatabase db = getReadableDatabase();
         Cursor curs = db.rawQuery("SELECT * from AGENCY where agency_password like '" + pass + "' AND agency_email like '" + email +"'",null);

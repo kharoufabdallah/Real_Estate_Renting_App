@@ -152,7 +152,7 @@ public class ApplicationForm extends AppCompatActivity {
             else {
                 /// send motification to agency
                 createNotification("Renting request from " + always_email,
-                        "User "+always_email+" wants to rent property no."+prop_id);
+                        "User "+always_email+" wants to rent property no."+prop_id,prop_id);
                 Toast.makeText(this, "notification sent", Toast.LENGTH_SHORT).show();
 //                push_tenant_prop_db();
             }
@@ -191,7 +191,7 @@ public class ApplicationForm extends AppCompatActivity {
     private static final int NOTIFICATION_ID = 123;
     private static final String NOTIFICATION_TITLE = "Notification Title";
     private static final String NOTIFICATION_BODY = "This is the body of my notification";
-    public void createNotification(String title, String body) {
+    public void createNotification(String title, String body,int prop_id) {
         Uri uir = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = new Intent(this, ViewTenant.class);
         intent.putExtra("emailyy",always_email);
@@ -202,7 +202,7 @@ public class ApplicationForm extends AppCompatActivity {
         intent.putExtra("prop_status",property.getStatus());
         intent.putExtra("prop_price",Double.toString(property.getRental_price()));
         intent.putExtra("prop_postal",property.getPostal_address());
-
+        intent.putExtra("prop_idd",prop_id);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_ONE_SHOT);
         createNotificationChannel();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,

@@ -26,7 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Filters Buttons" />
+            android:text="Press on Property card to view/rent/edit"
+            android:textColor="#FF0000"
+            android:textStyle="normal|bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +42,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#2FFFFFFF"
                 android:text="min. surface"
-                android:textColor="#9C27B0" />
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/min_rentalB"
@@ -49,7 +52,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#2FFFFFFF"
                 android:text="min. price"
-                android:textColor="#9C27B0" />
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/min_bedB"
@@ -58,7 +62,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#2FFFFFFF"
                 android:text="min. bedroom no"
-                android:textColor="#9C27B0" />
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -74,7 +79,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#2FFFFFFF"
                 android:text="max. surface"
-                android:textColor="#9C27B0" />
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/max_bedB"
@@ -83,7 +89,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#2FFFFFFF"
                 android:text="max. bedroom no"
-                android:textColor="#9C27B0" />
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
