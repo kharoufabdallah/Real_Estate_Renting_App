@@ -2,13 +2,18 @@ package com.example.renting_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +35,8 @@ public class ApplicationForm extends AppCompatActivity {
     TextView bed;
 
     String to_send_email;
+
+    Button snd_mesg;
 
     EditText getEmail;
     Button subEmail;
@@ -65,6 +72,7 @@ public class ApplicationForm extends AppCompatActivity {
 
         back =findViewById(R.id.back_app);
         apply=findViewById(R.id.apply);
+        snd_mesg = findViewById(R.id.sendmsssg);
 
         prop_ic.setImageResource(R.drawable.flag_belgium);
 
@@ -143,27 +151,86 @@ public class ApplicationForm extends AppCompatActivity {
                 return;}
             else {
                 /// send motification to agency
-                popNotification();
+                createNotification("Renting request from " + always_email,
+                        "User "+always_email+" wants to rent property no."+prop_id);
                 Toast.makeText(this, "notification sent", Toast.LENGTH_SHORT).show();
 //                push_tenant_prop_db();
             }
         });
+
+        snd_mesg.setOnClickListener(v -> {
+            Intent gmailIntent =new Intent();
+            gmailIntent.setAction(Intent.ACTION_SENDTO);
+            gmailIntent.setType("message/rfc822");
+            gmailIntent.setData(Uri.parse("mailto:"));
+            gmailIntent.putExtra(Intent.EXTRA_EMAIL,get_email_from_id_rel(prop_id,city.getText().toString()));
+            gmailIntent.putExtra(Intent.EXTRA_SUBJECT,"Property No. "+ prop_id + " Rental Inquiry");
+            gmailIntent.putExtra(Intent.EXTRA_TEXT,"Dear agency,\nI would like to ask about property of " + prop_id + " where it is in "+ city.getText().toString());
+            startActivity(gmailIntent);
+        });
+    }
+
+    public String get_email_from_id_rel(int prop_id,String city){
+        DataBaseHelper db = new DataBaseHelper(this);
+        return db.get_agency_formRel(prop_id,city);
     }
     public void popNotification() {
-        // Builds your notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_search_black_24dp)
-                .setContentTitle("A tenant needs to rent your property")
-                .setContentText("press to see details");
+       NotificationManager manager = (NotificationManager)  getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+       Uri uir = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        // Creates the intent needed to show the notification
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
+       NotificationCompat.Builder builder = new NotificationCompat.Builder( ApplicationForm.this, getString(R.string.app_name));
+       builder.setContentTitle("Renting Request");
+       builder.setContentText("User "+always_email+" wants to rent property no."+prop_id);
+       builder.setSmallIcon(R.drawable.ic_baseline_notifications_active_24);
+        builder.setSound(uir);
+        builder.setAutoCancel(true);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.build();
+        manager.notify(1,builder.build());
+    }
+    private static final int NOTIFICATION_ID = 123;
+    private static final String NOTIFICATION_TITLE = "Notification Title";
+    private static final String NOTIFICATION_BODY = "This is the body of my notification";
+    public void createNotification(String title, String body) {
+        Uri uir = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Intent intent = new Intent(this, ViewTenant.class);
+        intent.putExtra("emailyy",always_email);
+        intent.putExtra("cityy",property.getCity());
+        intent.putExtra("prop_date",Integer.toString(property.getConst_year()));
+        intent.putExtra("prop_surface",Double.toString(property.getSurface_area()));
+        intent.putExtra("prop_bed",Integer.toString(property.getBedroom_no()));
+        intent.putExtra("prop_status",property.getStatus());
+        intent.putExtra("prop_price",Double.toString(property.getRental_price()));
+        intent.putExtra("prop_postal",property.getPostal_address());
 
-        // Add as notification
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_ONE_SHOT);
+        createNotificationChannel();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                MY_CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle(title)
+                .addAction(R.drawable.ic_launcher_foreground,"View Tenant",pendingIntent)
+                .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+        builder.setSound(uir);
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+    private static final String MY_CHANNEL_ID = "my_chanel_1";
+    private static final String MY_CHANNEL_NAME = "My channel";
+
+    private void createNotificationChannel() {
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(MY_CHANNEL_ID,
+                MY_CHANNEL_NAME, importance);
+        NotificationManager notificationManager =
+                getSystemService(NotificationManager.class);
+        if (notificationManager != null) {
+            notificationManager.createNotificationChannel(channel);
+        }
     }
     public void push_tenant_prop_db()
     {

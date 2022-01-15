@@ -106,6 +106,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.close();
     }
 
+
     public void insert_into_prop_agency(List<Property> props) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues vs = new ContentValues();
@@ -168,6 +169,27 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         Cursor curs = db.rawQuery("SELECT * from tenant where tenant_password like '" + needed_to_search_pass + "' AND tenant_email like '" + found_email +"'",null);
         if(curs.moveToFirst()) return true;
         return false;
+    }
+    public Tenant getFeatures(String type, String email)
+    {
+        Tenant ten = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs = db.rawQuery("Select * from TENANT WHERE tenant_email LIKE '"+"%"+email+"%"+"'",null);
+        if (curs.moveToFirst()) return new Tenant(curs.getString(1),
+                curs.getString(2),
+        curs.getString(3),curs.getString(4),curs.getString(5),curs.getString(6),
+                curs.getDouble(7),curs.getString(8),curs.getInt(9),
+                curs.getString(10),curs.getString(11)
+                ,curs.getString(12));
+
+        return ten;
+    }
+    public  String get_agency_formRel(int id,String city)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor curs  = db.rawQuery("SELECT agency_name from PROP_AGENCY where prop_id like '" +id+ "' and property_city like '" + city +"'",null);
+        if(curs.moveToFirst()) return curs.getString(0);
+        return "";
     }
     public String get_passfrom_data(String needed_to_search_pass,String found_email){
         SQLiteDatabase db = getReadableDatabase();
